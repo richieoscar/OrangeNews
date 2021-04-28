@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/sports"
+        android:icon="@drawable/ic_sports"
+        android:title="Sport"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/entertainment"
+        android:icon="@drawable/ic_movie"
+        android:title="Entertainment"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/finance"
+        android:icon="@drawable/ic_business"
+        android:title="Finance"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/music"
+        android:icon="@drawable/ic_baseline_music_note_24"
+        android:title="Music"
+        app:showAsAction="withText" />
+
+
+</menu>
