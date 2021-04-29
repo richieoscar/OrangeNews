@@ -1,5 +1,7 @@
 package com.richieoscar.orangenews.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.model.Article;
+import com.richieoscar.orangenews.ui.DetailActivity;
 
 import java.util.ArrayList;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder> {
 
     private ArrayList<Article> articles;
+    private Context context;
 
+    public ArticleAdapter(Context context, ArrayList<Article> articles) {
+        this.context = context;
+        this.articles = articles;
+    }
     public ArticleAdapter(ArrayList<Article> articles) {
         this.articles = articles;
     }
@@ -41,7 +49,17 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         return articles.size();
     }
 
-    public class ArticleViewHolder extends RecyclerView.ViewHolder {
+    private void displayArticleInfo(int position, View v) {
+        Article article = articles.get(position);
+        Intent intent = new Intent(v.getContext(), DetailActivity.class);
+        intent.putExtra("Article", article);
+        v.getContext().startActivity(intent);
+  }
+
+
+
+
+    public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
         ImageView share;
         TextView title;
@@ -52,6 +70,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
             source = itemView.findViewById(R.id.list_source);
             imageView = itemView.findViewById(R.id.list_image);
             share = itemView.findViewById(R.id.list_share);
+            itemView.setOnClickListener(this);
 
         }
 
@@ -59,6 +78,12 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
             title.setText(article.getTitle());
             source.setText(article.getSource().getName());
             Glide.with(itemView.getContext()).load(article.getImageUrl()).into(imageView);
+        }
+
+        @Override
+        public void onClick(View v) {
+           int position = getAdapterPosition();
+           displayArticleInfo(position, v);
         }
     }
 }

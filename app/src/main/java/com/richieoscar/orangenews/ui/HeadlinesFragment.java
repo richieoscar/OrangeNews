@@ -7,12 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.richieoscar.orangenews.MainActivity;
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.ArticleAdapter;
 import com.richieoscar.orangenews.databinding.FragmentHeadlinesBinding;
@@ -35,8 +33,16 @@ public class HeadlinesFragment extends Fragment {
         }
         HeadlineViewModel viewModel = new ViewModelProvider(getActivity()).get(HeadlineViewModel.class);
         viewModel.fetch();
-        viewModel.getHeadlines().observe(getActivity(), articles -> setUpRecyclerView(articles));
+        viewModel.getHeadlines().observe(getActivity(), articles -> {
+            hideProgressbar();
+            setUpRecyclerView(articles);
+        });
         return binding.getRoot();
+    }
+
+    private void hideProgressbar() {
+        binding.headlineProgressBar.setVisibility(View.INVISIBLE);
+        binding.progressLoading.setVisibility(View.INVISIBLE);
     }
 
     private void setUpRecyclerView(ArrayList<Article> articles) {

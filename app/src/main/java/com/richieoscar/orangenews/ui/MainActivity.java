@@ -1,13 +1,16 @@
-package com.richieoscar.orangenews;
+package com.richieoscar.orangenews.ui;
 
 import android.os.Bundle;
 import android.view.Menu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,4 +34,5 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 }

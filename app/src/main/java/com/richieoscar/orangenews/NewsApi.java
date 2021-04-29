@@ -31,7 +31,19 @@ public interface NewsApi {
 
     @GET("top-headlines")
     Call<JsonResult> getEntertainmentNews(@Query("country") String country,
-                                   @Query("category") String entertainment,
-                                   @Query("pageSize") int pageSize,
-                                   @Query("apiKey") String apiKey);
+                                          @Query("category") String entertainment,
+                                          @Query("pageSize") int pageSize,
+                                          @Query("apiKey") String apiKey);
+
+    @GET("top-headlines")
+    Call<JsonResult> getTechNews(@Query("country") String country,
+                                 @Query("category") String tech,
+                                 @Query("pageSize") int pageSize,
+                                 @Query("apiKey") String apiKey);
+
+    @GET("top-headlines")
+    Call<JsonResult> getBusinessNews(@Query("country") String country,
+                                     @Query("category") String business,
+                                     @Query("pageSize") int pageSize,
+                                     @Query("apiKey") String apiKey);
 }

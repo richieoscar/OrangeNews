@@ -4,7 +4,7 @@
     app:startDestination="@id/home">
 
     <fragment
-        android:id="@+id/finance"
+        android:id="@+id/business"
         android:name="com.richieoscar.orangenews.ui.BusinessFragment"
         android:label="BusinessFragment" />
     <fragment
@@ -12,8 +12,8 @@
         android:name="com.richieoscar.orangenews.ui.EntertainmentFragment"
         android:label="EntertainmentFragment" />
     <fragment
-        android:id="@+id/music"
-        android:name="com.richieoscar.orangenews.ui.MusicFragment"
+        android:id="@+id/tech"
+        android:name="com.richieoscar.orangenews.ui.TechFragment"
         android:label="MusicFragment" />
     <fragment
         android:id="@+id/sports"
@@ -23,4 +23,12 @@
         android:id="@+id/home"
         android:name="com.richieoscar.orangenews.ui.HomeFragment"
         android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/headlinesFragment"
+        android:name="com.richieoscar.orangenews.ui.HeadlinesFragment"
+        android:label="HeadlinesFragment" />
+    <fragment
+        android:id="@+id/latestFragment"
+        android:name="com.richieoscar.orangenews.ui.LatestFragment"
+        android:label="LatestFragment" />
 </navigation>

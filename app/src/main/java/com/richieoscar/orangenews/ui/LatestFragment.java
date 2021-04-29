@@ -1,5 +1,7 @@
 package com.richieoscar.orangenews.ui;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,9 +32,37 @@ public class LatestFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_latest, container, false);
         viewModel = new ViewModelProvider(getActivity()).get(LatestViewModel.class);
+        if(isNetworkConnected()){
         viewModel.fetch();
-        viewModel.getLatestNews().observe(getActivity(), articles -> setUpRecyclerView(articles));
+        hideNetworkAlert();
+        }
+        else {
+            showNetworkAlert();
+            hideProgressbar();
+        }
+
         return binding.getRoot();
+    }
+
+    private void hideNetworkAlert() {
+        viewModel.getLatestNews().observe(getActivity(), articles -> {
+            hideProgressbar();
+            setUpRecyclerView(articles);
+            binding.imageNetwork.setVisibility(View.INVISIBLE);
+            binding.networkText.setVisibility(View.INVISIBLE);
+        });
+    }
+
+    private void showNetworkAlert() {
+        binding.imageNetwork.setVisibility(View.VISIBLE);
+        binding.networkText.setVisibility(View.VISIBLE);
+    }
+
+
+
+    private void hideProgressbar() {
+        binding.progressBar.setVisibility(View.INVISIBLE);
+        binding.progressLoading.setVisibility(View.INVISIBLE);
     }
 
     private void setUpRecyclerView(ArrayList<Article> articles) {
@@ -40,5 +70,10 @@ public class LatestFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         binding.latestRecyclerView.setAdapter(adapter);
         binding.latestRecyclerView.setLayoutManager(layoutManager);
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 }
