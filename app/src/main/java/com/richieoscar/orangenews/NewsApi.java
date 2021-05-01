@@ -1,19 +1,18 @@
 package com.richieoscar.orangenews;
 
-import androidx.lifecycle.LiveData;
-
 import com.richieoscar.orangenews.model.JsonResult;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 public interface NewsApi {
-    //@Headers("X-Api-Key: 11aa189af1c04dc5a5c9ee37aa43ef9f")
+
     @GET("everything")
     Call<JsonResult> getResults(@Query("q") String source,
+                                @Query("sortBy") String sortBy,
+                                @Query("from") String from,
+                                @Query("to") String to,
                                 @Query("pageSize") int pageSize,
                                 @Query("apiKey") String apiKey);
 
@@ -46,4 +45,10 @@ public interface NewsApi {
                                      @Query("category") String business,
                                      @Query("pageSize") int pageSize,
                                      @Query("apiKey") String apiKey);
+
+    @GET("everything")
+    Call<JsonResult> getSearch(@Query("q") String query,
+                               @Query("sortBy") String sortBy,
+                               @Query("pageSize") int pageSize,
+                               @Query("apiKey") String apiKey);
 }

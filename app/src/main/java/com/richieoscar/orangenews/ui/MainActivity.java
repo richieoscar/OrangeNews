@@ -1,8 +1,11 @@
 package com.richieoscar.orangenews.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -35,4 +38,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.search:
+                 openSearch();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void openSearch() {
+        startActivity(new Intent(this, SearchActivity.class));
+
+    }
 }

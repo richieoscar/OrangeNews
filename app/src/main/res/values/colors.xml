@@ -14,9 +14,5 @@
     <color name="primaryTextColor">#000000</color>
     <color name="green">#5C642A</color>
     <color name="offwhite">#86FFFFFF</color>
-
-    <!--    <color name="primaryColor">#ffffff</color>-->
-    <!--    <color name="primaryLightColor">#ffffff</color>-->
-    <!--    <color name="primaryDarkColor">#cccccc</color>-->
-    <!--    <color name="primaryTextColor">#f68d1e</color>-->
+    <color name="orange">#f68d1e</color>
 </resources>

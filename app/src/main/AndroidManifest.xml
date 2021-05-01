@@ -12,15 +12,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OrangeNews">
-        <activity android:name=".ui.DetailActivity"
-            android:parentActivityName=".ui.MainActivity"
-            android:label="Article"></activity>
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.SplashActivity"
+            android:theme="@style/myTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+            <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.WebActivity" />
+        <activity
+            android:name=".ui.SearchActivity"
+            android:label="Search"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.DetailActivity"
+            android:label="Article"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity android:name=".ui.MainActivity">
         </activity>
     </application>
 
