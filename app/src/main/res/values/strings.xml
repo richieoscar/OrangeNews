@@ -45,4 +45,6 @@
     <string name="found">\" articles found on \"</string>
     <string name="sports_feed">Sports Feed</string>
     <string name="tech_feeds">Tech Feeds</string>
+    <string name="bo_bookmarks">No Available Bookmarks</string>
+    <string name="setting">Settings</string>
 </resources>

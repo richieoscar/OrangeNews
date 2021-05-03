@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.search:
                  openSearch();
+                 break;
+            case R.id.bookmarks:
+                Toast.makeText(this, R.string.bo_bookmarks, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.settings:
+                Toast.makeText(this, R.string.setting, Toast.LENGTH_SHORT).show();
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
