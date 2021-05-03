@@ -1,6 +1,5 @@
 package com.richieoscar.orangenews.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +20,7 @@ import java.util.ArrayList;
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder> {
 
     private ArrayList<Article> articles;
-    private Context context;
 
-    public ArticleAdapter(Context context, ArrayList<Article> articles) {
-        this.context = context;
-        this.articles = articles;
-    }
     public ArticleAdapter(ArrayList<Article> articles) {
         this.articles = articles;
     }
@@ -54,9 +48,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         Intent intent = new Intent(v.getContext(), DetailActivity.class);
         intent.putExtra("Article", article);
         v.getContext().startActivity(intent);
-  }
-
-
+    }
 
 
     public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -64,6 +56,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         ImageView share;
         TextView title;
         TextView source;
+
         public ArticleViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.list_title);
@@ -71,10 +64,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
             imageView = itemView.findViewById(R.id.list_image);
             share = itemView.findViewById(R.id.list_share);
             itemView.setOnClickListener(this);
-
         }
 
-        public  void bind(Article article){
+        public void bind(Article article) {
             title.setText(article.getTitle());
             source.setText(article.getSource().getName());
             Glide.with(itemView.getContext()).load(article.getImageUrl()).into(imageView);
@@ -82,8 +74,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
 
         @Override
         public void onClick(View v) {
-           int position = getAdapterPosition();
-           displayArticleInfo(position, v);
+            int position = getAdapterPosition();
+            displayArticleInfo(position, v);
         }
     }
 }

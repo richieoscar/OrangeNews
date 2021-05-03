@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class HeadlineViewModel extends ViewModel {
 
-    private MutableLiveData<ArrayList<Article>> article = new MutableLiveData<>();
     private LiveData<ArrayList<Article>> liveDataArticles;
     private DataRepository repository = new DataRepository();
 

@@ -29,6 +29,13 @@ public class DataRepository {
     private String from = currentDate.toString();
     private String to = currentDate.toString();
     private String query;
+    private MutableLiveData<ArrayList<Article>> headlineArticles = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Article>> latestNewsArticles = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Article>> sportNewsArticles = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Article>> entertainmentArticles = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Article>> techArticles = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Article>> businessArticles = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Article>> searchArticles = new MutableLiveData<>();
 
     public String getQuery() {
         return query;
@@ -37,14 +44,6 @@ public class DataRepository {
     public void setQuery(String query) {
         this.query = query;
     }
-
-    private MutableLiveData<ArrayList<Article>> headlineArticles = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Article>> latestNewsArticles = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Article>> sportNewsArticles = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Article>> entertainmentArticles = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Article>> techArticles = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Article>> businessArticles = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Article>> searchArticles = new MutableLiveData<>();
 
     public void fetchHeadlineNews() {
         Handler handler = new Handler(Looper.getMainLooper());
@@ -239,7 +238,6 @@ public class DataRepository {
     }
 
     public MutableLiveData<ArrayList<Article>> searchArticles() {
-
         return searchArticles;
     }
 }

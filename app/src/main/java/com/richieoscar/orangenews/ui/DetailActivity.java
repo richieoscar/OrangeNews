@@ -28,7 +28,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
-        article = getIntent().getParcelableExtra("Article");
+        article = getIntent().getParcelableExtra(getString(R.string.article));
         display(article);
         readFullArticle();
     }
@@ -46,12 +46,14 @@ public class DetailActivity extends AppCompatActivity {
             viewModel.setAuthor(article.getAuthor());
             viewModel.setContent(article.getContent());
             viewModel.setTitle(article.getTitle());
+            viewModel.setSource(article.getSource().getName());
             viewModel.setImageUrl(article.getImageUrl());
             viewModel.setPublished(article.getPublishedAt());
             binding.titleDetail.setText(viewModel.getTitle());
             binding.authorDetail.setText(viewModel.getAuthor());
             binding.publishDetail.setText(viewModel.getPublished());
             binding.contentDetail.setText(viewModel.getContent());
+            binding.source.setText(viewModel.getSource());
             Glide.with(this).load(viewModel.getImageUrl()).into(binding.imageDetail);
         }
     }
@@ -79,15 +81,15 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void addToBookMark() {
-        Toast.makeText(this, "Added to Bookmarks", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.add_to_bookmarks, Toast.LENGTH_SHORT).show();
     }
 
     private void shareArticle() {
         ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")
-                .setChooserTitle("Share With")
+                .setChooserTitle(R.string.share_with)
                 .setText(article.getTitle() + "\n"
-                        + article.getUrl() + "\n" + "From Orange News App")
+                        + article.getUrl() + "\n" + getString(R.string.app_name_tag))
                 .startChooser();
     }
 }

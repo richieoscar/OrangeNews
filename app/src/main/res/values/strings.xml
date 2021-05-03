@@ -14,4 +14,35 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="feeds">Feeds</string>
+    <string name="sports">Sports</string>
+    <string name="buzz">Buzz</string>
+    <string name="business">Business</string>
+    <string name="tech">Tech</string>
+    <string name="share">share</string>
+    <string name="saved">saved</string>
+    <string name="bookmarks">bookmarks</string>
+    <string name="settings">settings</string>
+    <string name="share_link">share_link</string>
+    <string name="read_more_here">Read More Here</string>
+    <string name="stock_markets">Stock Markets</string>
+    <string name="author">Author</string>
+    <string name="loius_lane">Loius Lane</string>
+    <string name="published">Published</string>
+    <string name="search_here">Search Here</string>
+    <string name="search">Search</string>
+    <string name="loading">Loading</string>
+    <string name="no_network">No Network</string>
+    <string name="latest_club_transfer">Latest Club Transfer</string>
+    <string name="cnn">CNN</string>
+    <string name="business_feeds">Business Feeds</string>
+    <string name="article">Article</string>
+    <string name="add_to_bookmarks">Added to Bookmarks</string>
+    <string name="share_with">Share With</string>
+    <string name="app_name_tag">From Orange News App</string>
+    <string name="buzz_feed">Buzz Feed</string>
+    <string name="searching">Searching...</string>
+    <string name="results">\"Search Result: \"</string>
+    <string name="found">\" articles found on \"</string>
+    <string name="sports_feed">Sports Feed</string>
+    <string name="tech_feeds">Tech Feeds</string>
 </resources>

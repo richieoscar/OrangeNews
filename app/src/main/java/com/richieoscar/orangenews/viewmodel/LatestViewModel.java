@@ -11,16 +11,13 @@ import java.util.ArrayList;
 
 public class LatestViewModel extends ViewModel {
     private LiveData<ArrayList<Article>> latestNewsArticles = new MutableLiveData<>();
-    private static final String TAG = "LatestViewModel";
     private DataRepository repository = new DataRepository();
 
-    public void fetch(){
+    public void fetch() {
         repository.fetchLatestNews();
     }
 
     public LiveData<ArrayList<Article>> getLatestNews() {
         return latestNewsArticles = repository.latestNewsArticles();
     }
-
-
 }

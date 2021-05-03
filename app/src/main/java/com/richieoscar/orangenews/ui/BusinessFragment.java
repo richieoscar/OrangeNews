@@ -29,7 +29,7 @@ public class BusinessFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business, container, false);
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle("Business Feeds");
+            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.business_feeds);
         }
         BusinessViewModel viewModel = new ViewModelProvider(getActivity()).get(BusinessViewModel.class);
         viewModel.fetch();

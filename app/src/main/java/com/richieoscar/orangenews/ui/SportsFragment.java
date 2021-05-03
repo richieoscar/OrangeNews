@@ -29,7 +29,7 @@ public class SportsFragment extends Fragment {
         // Inflate the layout for this fragment
        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sports, container, false);
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle("Sports Feed");
+            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sports_feed);
         }
         SportsViewModel viewModel = new ViewModelProvider(getActivity()).get(SportsViewModel.class);
         viewModel.fetch();

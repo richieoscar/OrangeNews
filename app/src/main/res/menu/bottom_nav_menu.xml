@@ -8,22 +8,22 @@
     <item
         android:id="@+id/sports"
         android:icon="@drawable/ic_sports"
-        android:title="Sport"
+        android:title="@string/sports"
         app:showAsAction="withText" />
     <item
         android:id="@+id/entertainment"
         android:icon="@drawable/ic_movie"
-        android:title="Buzz"
+        android:title="@string/buzz"
         app:showAsAction="withText" />
     <item
         android:id="@+id/business"
         android:icon="@drawable/ic_business"
-        android:title="Business"
+        android:title="@string/business"
         app:showAsAction="withText" />
     <item
         android:id="@+id/tech"
         android:icon="@drawable/ic_tech"
-        android:title="Tech"
+        android:title="@string/tech"
         app:showAsAction="withText" />
 
 

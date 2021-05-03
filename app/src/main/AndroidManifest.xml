@@ -23,7 +23,7 @@
         <activity android:name=".ui.WebActivity" />
         <activity
             android:name=".ui.SearchActivity"
-            android:label="Search"
+            android:label="@string/search"
             android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.DetailActivity"

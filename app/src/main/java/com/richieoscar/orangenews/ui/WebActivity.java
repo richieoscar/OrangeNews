@@ -57,7 +57,7 @@ public class WebActivity extends AppCompatActivity {
         ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")
                 .setText(url)
-                .setChooserTitle("Share With")
+                .setChooserTitle(R.string.share_with)
                 .startChooser();
     }
 }

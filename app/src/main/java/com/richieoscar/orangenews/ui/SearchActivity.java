@@ -36,12 +36,12 @@ public class SearchActivity extends AppCompatActivity {
     private void search() {
         binding.buttonSearch.setOnClickListener(v -> {
             query = binding.searchView.getText().toString();
-            binding.searchResults.setText("Searching...");
+            binding.searchResults.setText(R.string.searching);
             viewModel.setQuery(query);
             viewModel.fetch();
             viewModel.getSearchResult().observe(this, articles -> {
                 setUpRecyclerView(articles);
-                binding.searchResults.setText("Search Result: " + articles.size() + " articles found");
+                binding.searchResults.setText(getString(R.string.results) + articles.size() + getString(R.string.found) +viewModel.getQuery());
                 Log.d(TAG, "onCreate: results" + articles.size());
             });
             binding.searchView.setText("");
