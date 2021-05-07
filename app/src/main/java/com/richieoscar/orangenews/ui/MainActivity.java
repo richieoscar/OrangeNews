@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings:
                 Toast.makeText(this, R.string.setting, Toast.LENGTH_SHORT).show();
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }
