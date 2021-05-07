@@ -15,4 +15,5 @@
     <color name="green">#5C642A</color>
     <color name="offwhite">#86FFFFFF</color>
     <color name="orange">#f68d1e</color>
+    <color name="darkMode">#171616</color>
 </resources>
