@@ -18,6 +18,6 @@ public class EntertainmentViewModel extends ViewModel {
     }
 
     public LiveData<ArrayList<Article>> getEntertainmentArticles() {
-        return entertainmentArticles = repository.entertainmentArticles();
+        return entertainmentArticles = repository.getEntertainmentArticles();
     }
 }

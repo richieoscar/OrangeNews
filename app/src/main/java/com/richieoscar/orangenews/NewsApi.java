@@ -25,6 +25,7 @@ public interface NewsApi {
     @GET("top-headlines")
     Call<JsonResult> getSportsNews(@Query("country") String country,
                                    @Query("category") String sport,
+                                   @Query("language") String lang,
                                    @Query("pageSize") int pageSize,
                                    @Query("apiKey") String apiKey);
 

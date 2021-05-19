@@ -8,15 +8,16 @@ import com.richieoscar.orangenews.repository.DataRepository;
 
 import java.util.ArrayList;
 
-public class TechViewModel extends ViewModel {
-    private LiveData<ArrayList<Article>> techArticles;
+public class SportsUkViewModel extends ViewModel {
+    private LiveData<ArrayList<Article>> sportNewsArticle;
     private DataRepository repository = new DataRepository();
 
     public void fetch() {
-        repository.fetchTechNews();
+        repository.fetchUkSportsNews();
     }
 
-    public LiveData<ArrayList<Article>> getTechNews() {
-        return techArticles = repository.getTechArticles();
+    public LiveData<ArrayList<Article>> getSportNews() {
+        return sportNewsArticle = repository.getUkSportNewsArticles();
+
     }
 }

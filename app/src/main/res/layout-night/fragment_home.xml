@@ -21,14 +21,16 @@
                 android:id="@+id/homeTablayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/primaryColor"
+                android:backgroundTint="#131212"
+                android:isScrollContainer="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tabIndicatorColor="#FFFFFF"
+                app:tabIndicatorColor="@color/primaryLightColor"
                 app:tabIndicatorFullWidth="false"
+                app:tabIndicatorHeight="5dp"
                 app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="#8FFFFFFF" />
+                app:tabTextColor="#A8FFFFFF" />
         </androidx.viewpager.widget.ViewPager>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

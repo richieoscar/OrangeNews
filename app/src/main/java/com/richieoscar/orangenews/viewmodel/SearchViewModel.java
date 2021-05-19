@@ -27,6 +27,6 @@ public class SearchViewModel extends ViewModel {
     }
 
     public LiveData<ArrayList<Article>> getSearchResult() {
-        return searchQuery = repository.searchArticles();
+        return searchQuery = repository.getSearchArticles();
     }
 }

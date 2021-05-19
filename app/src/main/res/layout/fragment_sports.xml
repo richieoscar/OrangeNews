@@ -12,36 +12,26 @@
         android:layout_height="match_parent"
         tools:context=".ui.SportsFragment">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sportsRecyclerView"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/sportViewpager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="3dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_list" />
+            android:layout_height="wrap_content">
 
-        <ProgressBar
-            android:id="@+id/sports_progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="340dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/homeTablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primaryColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabIndicatorColor="#FFFFFF"
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorHeight="2dp"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="#8FFFFFFF" />
+        </androidx.viewpager.widget.ViewPager>
 
-        <TextView
-            android:id="@+id/sportsLoading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/loading"
-            app:layout_constraintEnd_toEndOf="@+id/sports_progressBar"
-            app:layout_constraintStart_toStartOf="@+id/sports_progressBar"
-            app:layout_constraintTop_toBottomOf="@+id/sports_progressBar" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

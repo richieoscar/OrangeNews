@@ -18,6 +18,6 @@ public class LatestViewModel extends ViewModel {
     }
 
     public LiveData<ArrayList<Article>> getLatestNews() {
-        return latestNewsArticles = repository.latestNewsArticles();
+        return latestNewsArticles = repository.getLatestNewsArticles();
     }
 }

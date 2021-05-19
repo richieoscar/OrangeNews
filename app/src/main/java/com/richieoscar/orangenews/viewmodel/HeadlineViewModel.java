@@ -1,7 +1,6 @@
 package com.richieoscar.orangenews.viewmodel;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.richieoscar.orangenews.model.Article;
@@ -19,7 +18,7 @@ public class HeadlineViewModel extends ViewModel {
     }
 
     public LiveData<ArrayList<Article>> getHeadlines() {
-        return liveDataArticles = repository.headlineArticles();
+        return liveDataArticles = repository.getHeadlineArticles();
     }
 }
 

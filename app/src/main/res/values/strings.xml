@@ -34,17 +34,18 @@
     <string name="no_network">No Network</string>
     <string name="latest_club_transfer">Latest Club Transfer</string>
     <string name="cnn">CNN</string>
-    <string name="business_feeds">Business Feeds</string>
+    <string name="business_feeds">Business</string>
     <string name="article">Article</string>
     <string name="add_to_bookmarks">Added to Bookmarks</string>
     <string name="share_with">Share With</string>
     <string name="app_name_tag">From Orange News App</string>
-    <string name="buzz_feed">Buzz Feed</string>
+    <string name="buzz_feed">Buzz</string>
     <string name="searching">Searching...</string>
     <string name="results">\"Search Result: \"</string>
     <string name="found">\" articles found on \"</string>
-    <string name="sports_feed">Sports Feed</string>
-    <string name="tech_feeds">Tech Feeds</string>
+    <string name="sports_feed">Sports</string>
+    <string name="tech_feeds">Technology</string>
     <string name="bo_bookmarks">No Available Bookmarks</string>
     <string name="setting">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

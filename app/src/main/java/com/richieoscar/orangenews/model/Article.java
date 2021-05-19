@@ -7,6 +7,7 @@ public class Article implements Parcelable {
     private Source source;
     private String author;
     private String title;
+    private String description;
     private String url;
     private String urlToImage;
     private String publishedAt;
@@ -15,6 +16,7 @@ public class Article implements Parcelable {
     protected Article(Parcel in) {
         author = in.readString();
         title = in.readString();
+        description = in.readString();
         url = in.readString();
         urlToImage = in.readString();
         publishedAt = in.readString();
@@ -46,6 +48,10 @@ public class Article implements Parcelable {
         return title;
     }
 
+    public String getDescription(){
+        return description;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -71,6 +77,7 @@ public class Article implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(author);
         dest.writeString(title);
+        dest.writeString(description);
         dest.writeString(url);
         dest.writeString(urlToImage);
         dest.writeString(publishedAt);

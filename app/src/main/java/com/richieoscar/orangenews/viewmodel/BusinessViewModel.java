@@ -17,6 +17,6 @@ public class BusinessViewModel extends ViewModel {
     }
 
     public LiveData<ArrayList<Article>> getBusinessNews() {
-        return techArticles = repository.businessArticles();
+        return techArticles = repository.getBusinessArticles();
     }
 }

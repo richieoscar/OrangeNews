@@ -40,7 +40,7 @@ public class LatestFragment extends Fragment {
             showNetworkAlert();
             hideProgressbar();
         }
-
+        
         return binding.getRoot();
     }
 
@@ -70,6 +70,7 @@ public class LatestFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         binding.latestRecyclerView.setAdapter(adapter);
         binding.latestRecyclerView.setLayoutManager(layoutManager);
+
     }
 
     private boolean isNetworkConnected() {

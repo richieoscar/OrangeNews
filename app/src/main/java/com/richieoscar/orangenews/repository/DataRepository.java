@@ -32,6 +32,10 @@ public class DataRepository {
     private MutableLiveData<ArrayList<Article>> headlineArticles = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Article>> latestNewsArticles = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Article>> sportNewsArticles = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Article>> ukSportNewsArticles = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Article>> usSportNewsArticles = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Article>> germanySportNewsArticles = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Article>> spainSportNewsArticles = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Article>> entertainmentArticles = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Article>> techArticles = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Article>> businessArticles = new MutableLiveData<>();
@@ -93,16 +97,112 @@ public class DataRepository {
         });
     }
 
-    public void fetchSportsNews() {
+    public void fetchLocalSportsNews() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
             NewsApi connect = ApiClient.getApiInstance().create(NewsApi.class);
-            Call<JsonResult> call = connect.getSportsNews("us", "sports", PAGE_SIZE, API_KEY);
+            Call<JsonResult> call = connect.getSportsNews("ng", "sports", null, PAGE_SIZE, API_KEY);
             call.enqueue(new Callback<JsonResult>() {
                 @Override
                 public void onResponse(Call<JsonResult> call, Response<JsonResult> response) {
                     if (response.isSuccessful()) {
                         sportNewsArticles.setValue(response.body().getArticles());
+                        Log.d(TAG, "onResponse: running on " + Thread.currentThread().getName() + response.body().getArticles().toString());
+                    } else {
+                        Log.d(TAG, "onResponse: sports news" + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonResult> call, Throwable t) {
+                    Log.d(TAG, "onFailure:sports news failed");
+                }
+            });
+        });
+    }
+
+    public void fetchUkSportsNews() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            NewsApi connect = ApiClient.getApiInstance().create(NewsApi.class);
+            Call<JsonResult> call = connect.getSportsNews("gb", "sports", null,  PAGE_SIZE, API_KEY);
+            call.enqueue(new Callback<JsonResult>() {
+                @Override
+                public void onResponse(Call<JsonResult> call, Response<JsonResult> response) {
+                    if (response.isSuccessful()) {
+                        ukSportNewsArticles.setValue(response.body().getArticles());
+                        Log.d(TAG, "onResponse: running on " + Thread.currentThread().getName() + response.body().getArticles().toString());
+                    } else {
+                        Log.d(TAG, "onResponse: sports news" + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonResult> call, Throwable t) {
+                    Log.d(TAG, "onFailure:sports news failed");
+                }
+            });
+        });
+    }
+
+    public void fetchUSSportsNews() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            NewsApi connect = ApiClient.getApiInstance().create(NewsApi.class);
+            Call<JsonResult> call = connect.getSportsNews("us", "sports",null, PAGE_SIZE, API_KEY);
+            call.enqueue(new Callback<JsonResult>() {
+                @Override
+                public void onResponse(Call<JsonResult> call, Response<JsonResult> response) {
+                    if (response.isSuccessful()) {
+                        usSportNewsArticles.setValue(response.body().getArticles());
+                        Log.d(TAG, "onResponse: running on " + Thread.currentThread().getName() + response.body().getArticles().toString());
+                    } else {
+                        Log.d(TAG, "onResponse: sports news" + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonResult> call, Throwable t) {
+                    Log.d(TAG, "onFailure:sports news failed");
+                }
+            });
+        });
+    }
+
+    public void fetchGermanySportsNews() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            NewsApi connect = ApiClient.getApiInstance().create(NewsApi.class);
+            Call<JsonResult> call = connect.getSportsNews("de", "sports", null, PAGE_SIZE, API_KEY);
+            call.enqueue(new Callback<JsonResult>() {
+                @Override
+                public void onResponse(Call<JsonResult> call, Response<JsonResult> response) {
+                    if (response.isSuccessful()) {
+                        germanySportNewsArticles.setValue(response.body().getArticles());
+                        Log.d(TAG, "onResponse: running on " + Thread.currentThread().getName() + response.body().getArticles().toString());
+                    } else {
+                        Log.d(TAG, "onResponse: sports news" + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonResult> call, Throwable t) {
+                    Log.d(TAG, "onFailure:sports news failed");
+                }
+            });
+        });
+    }
+
+    public void fetchSpainSportsNews() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            NewsApi connect = ApiClient.getApiInstance().create(NewsApi.class);
+            Call<JsonResult> call = connect.getSportsNews("se", "sports", null, PAGE_SIZE, API_KEY);
+            call.enqueue(new Callback<JsonResult>() {
+                @Override
+                public void onResponse(Call<JsonResult> call, Response<JsonResult> response) {
+                    if (response.isSuccessful()) {
+                        spainSportNewsArticles.setValue(response.body().getArticles());
                         Log.d(TAG, "onResponse: running on " + Thread.currentThread().getName() + response.body().getArticles().toString());
                     } else {
                         Log.d(TAG, "onResponse: sports news" + response.code());
@@ -213,31 +313,46 @@ public class DataRepository {
         });
     }
 
-    public MutableLiveData<ArrayList<Article>> headlineArticles() {
+    public MutableLiveData<ArrayList<Article>> getHeadlineArticles() {
         return headlineArticles;
     }
 
-    public MutableLiveData<ArrayList<Article>> latestNewsArticles() {
+    public MutableLiveData<ArrayList<Article>> getLatestNewsArticles() {
         return latestNewsArticles;
     }
 
-    public MutableLiveData<ArrayList<Article>> sportNewsArticles() {
+    public MutableLiveData<ArrayList<Article>> getLocalSportNewsArticles() {
         return sportNewsArticles;
     }
+    public MutableLiveData<ArrayList<Article>> getUsSportNewsArticles() {
+        return usSportNewsArticles;
+    }
 
-    public MutableLiveData<ArrayList<Article>> entertainmentArticles() {
+    public MutableLiveData<ArrayList<Article>> getUkSportNewsArticles() {
+        return ukSportNewsArticles;
+    }
+
+    public MutableLiveData<ArrayList<Article>> getSpainSportNewsArticles() {
+        return spainSportNewsArticles;
+    }
+
+    public MutableLiveData<ArrayList<Article>> getGermanySportNewsArticles() {
+        return germanySportNewsArticles;
+    }
+
+    public MutableLiveData<ArrayList<Article>> getEntertainmentArticles() {
         return entertainmentArticles;
     }
 
-    public MutableLiveData<ArrayList<Article>> techArticles() {
+    public MutableLiveData<ArrayList<Article>> getTechArticles() {
         return techArticles;
     }
 
-    public MutableLiveData<ArrayList<Article>> businessArticles() {
+    public MutableLiveData<ArrayList<Article>> getBusinessArticles() {
         return businessArticles;
     }
 
-    public MutableLiveData<ArrayList<Article>> searchArticles() {
+    public MutableLiveData<ArrayList<Article>> getSearchArticles() {
         return searchArticles;
     }
 }
