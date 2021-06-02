@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/drawer_nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_nav_graph"
+    app:startDestination="@id/likesFragment">
 
+    <fragment
+        android:id="@+id/likesFragment"
+        android:name="com.richieoscar.orangenews.ui.LikesFragment"
+        android:label="fragment_likes"
+        tools:layout="@layout/fragment_likes" />
+    <fragment
+        android:id="@+id/saved"
+        android:name="com.richieoscar.orangenews.ui.SavedFragment"
+        android:label="fragment_saved"
+        tools:layout="@layout/fragment_saved" />
+    <fragment
+        android:id="@+id/sources"
+        android:name="com.richieoscar.orangenews.ui.SourcesFragment"
+        android:label="fragment_sources"
+        tools:layout="@layout/fragment_sources" />
 </navigation>

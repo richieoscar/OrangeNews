@@ -4,20 +4,21 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.richieoscar.orangenews.model.Article;
-import com.richieoscar.orangenews.repository.DataRepository;
+import com.richieoscar.orangenews.model.Source;
+import com.richieoscar.orangenews.repository.SourcesRepository;
 
 import java.util.ArrayList;
 
-public class EntertainmentViewModel extends ViewModel {
+public class SourcesViewModel extends ViewModel {
 
-    private LiveData<ArrayList<Article>> entertainmentArticles;
-    private DataRepository repository = new DataRepository();
+    private LiveData<ArrayList<Source>> allSources;
+    private SourcesRepository repository = new SourcesRepository();
 
     public void fetch() {
-        repository.fetchEntertainmentNews();
+        repository.fetchAllSources();
     }
 
-    public LiveData<ArrayList<Article>> getEntertainmentArticles() {
-        return entertainmentArticles = repository.getEntertainmentArticles();
+    public LiveData<ArrayList<Source>> getAllSources() {
+        return allSources = repository.getAllSources();
     }
 }

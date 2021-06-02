@@ -8,8 +8,8 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
-import com.richieoscar.orangenews.ApiClient;
-import com.richieoscar.orangenews.NewsApi;
+import com.richieoscar.orangenews.api.ApiClient;
+import com.richieoscar.orangenews.api.NewsApi;
 import com.richieoscar.orangenews.model.Article;
 import com.richieoscar.orangenews.model.JsonResult;
 

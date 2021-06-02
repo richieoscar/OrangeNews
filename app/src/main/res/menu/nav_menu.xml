@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/likes"
+            android:icon="@drawable/ic_baseline_favorite_24"
+            android:title="Likes" />
+        <item
+            android:id="@+id/saved"
+            android:icon="@drawable/ic_baseline_bookmarks_24"
+            android:title="Saved Articles" />
+        <item
+            android:id="@+id/sources"
+            android:icon="@drawable/ic_sources"
+            android:title="Sources" />
+    </group>
 
 </menu>

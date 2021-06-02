@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/home">
 
     <fragment
@@ -31,4 +33,31 @@
         android:id="@+id/latestFragment"
         android:name="com.richieoscar.orangenews.ui.LatestFragment"
         android:label="LatestFragment" />
+
+    <fragment
+        android:id="@+id/likesFragment"
+        android:name="com.richieoscar.orangenews.ui.LikesFragment"
+        android:label="fragment_likes"
+        tools:layout="@layout/fragment_likes" />
+    <fragment
+        android:id="@+id/savedFragment"
+        android:name="com.richieoscar.orangenews.ui.SavedFragment"
+        android:label="fragment_saved"
+        tools:layout="@layout/fragment_saved" />
+    <fragment
+        android:id="@+id/sourcesFragment"
+        android:name="com.richieoscar.orangenews.ui.SourcesFragment"
+        android:label="fragment_sources"
+        tools:layout="@layout/fragment_sources" >
+        <action
+            android:id="@+id/action_sourcesFragment_to_home"
+            app:popUpTo="@id/home" />
+    </fragment>
+    <fragment
+        android:id="@+id/sourceDetailFragment"
+        android:name="com.richieoscar.orangenews.ui.SourceDetailFragment"
+        android:label="fragment_source_detail"
+        tools:layout="@layout/fragment_source_detail" />
+
+
 </navigation>

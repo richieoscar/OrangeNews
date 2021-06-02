@@ -1,23 +1,16 @@
 package com.richieoscar.orangenews.model;
 
-import androidx.lifecycle.LiveData;
-
 import java.util.ArrayList;
 
-public class JsonResult {
+public class SourceJsonResult {
     String status;
-    int totalResults;
-    private ArrayList<Article> articles;
+    private ArrayList<Source> sources;
 
     public String getStatus() {
         return status;
     }
 
-    public int getTotalResults() {
-        return totalResults;
-    }
-
-    public ArrayList<Article> getArticles() {
-        return articles;
+    public ArrayList<Source> getSources() {
+        return sources;
     }
 }

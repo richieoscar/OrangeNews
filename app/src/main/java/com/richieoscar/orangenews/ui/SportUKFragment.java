@@ -31,9 +31,6 @@ public class SportUKFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sport_u_k, container, false);
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sports_feed);
-        }
         SportsUkViewModel viewModel = new ViewModelProvider(getActivity()).get(SportsUkViewModel.class);
         viewModel.fetch();
         viewModel.getSportNews().observe(getActivity(), articles -> {

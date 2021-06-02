@@ -1,6 +1,7 @@
-package com.richieoscar.orangenews;
+package com.richieoscar.orangenews.api;
 
 import com.richieoscar.orangenews.model.JsonResult;
+import com.richieoscar.orangenews.model.SourceJsonResult;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -52,4 +53,14 @@ public interface NewsApi {
                                @Query("sortBy") String sortBy,
                                @Query("pageSize") int pageSize,
                                @Query("apiKey") String apiKey);
+
+    @GET("everything")
+    Call<JsonResult> getFromSource(
+                               @Query("domains") String domain,
+                              // @Query("pageSize") int pageSize,
+                               @Query("apiKey") String apiKey);
+
+    @GET("sources")
+    Call<SourceJsonResult> getAllSources(
+            @Query("apiKey") String apiKey);
 }

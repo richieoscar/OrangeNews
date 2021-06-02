@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.model.Article;
 import com.richieoscar.orangenews.model.Source;
@@ -18,34 +20,30 @@ import com.richieoscar.orangenews.ui.MainActivity;
 
 import java.util.ArrayList;
 
-public class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.ArticleViewHolder> {
+public class SourcesDetailAdapter extends RecyclerView.Adapter<SourcesDetailAdapter.ArticleViewHolder> {
 
-    private ArrayList<Source> sources;
     private ArrayList<Article> articles;
-    private SourcesRepository repository = new SourcesRepository();
 
-    public SourcesAdapter(ArrayList<Source> sources, ArrayList<Article> articles) {
-        this.sources = sources;
+    public SourcesDetailAdapter( ArrayList<Article> articles) {
         this.articles = articles;
     }
-
 
     @NonNull
     @Override
     public ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.sources_list, parent, false);
+        View view = inflater.inflate(R.layout.item_list, parent, false);
         return new ArticleViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
-        holder.bind(sources.get(position));
+        holder.bind(articles.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return sources.size();
+        return articles.size();
     }
 
     private void displayArticleInfo(int position, View v) {
@@ -57,38 +55,33 @@ public class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.ArticleV
 
 
     public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        ImageView imageView;
+        ImageView like;
         TextView title;
+        TextView publishedAt;
+        TextView source;
         TextView description;
-        TextView category;
 
         public ArticleViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.source_name);
-            category = itemView.findViewById(R.id.source_category);
-            description = itemView.findViewById(R.id.source_description);
+            title = itemView.findViewById(R.id.list_title);
+            source = itemView.findViewById(R.id.list_source);
+            imageView = itemView.findViewById(R.id.list_image);
+            like = itemView.findViewById(R.id.list_like);
+            description = itemView.findViewById(R.id.description);
+            publishedAt = itemView.findViewById(R.id.publishDetail);
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Source source) {
-            title.setText(source.getName());
-            description.setText(source.getDescription());
-            category.setText(source.getCategory());
-
+        public void bind(Article article) {
+            Glide.with(itemView.getContext()).load(article.getImageUrl()).into(imageView);
+            title.setText(article.getTitle());
+            description.setText(article.getDescription());
+            source.setText(article.getSource().getName());
         }
 
         @Override
         public void onClick(View v) {
-            int position = getAdapterPosition();
-            Source source = sources.get(position);
-            String domain = getDomain(source.getUrl());
-            repository.setDomain(domain);
-            MainActivity activity = (MainActivity) v.getContext();
-            activity.navigateToSourceDetail();
-        }
-
-        public String getDomain(String url) {
-            String[] domain = url.split("\\.");
-            return domain[1] + "." + domain[2];
         }
 
     }

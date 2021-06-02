@@ -30,6 +30,7 @@ public class HeadlinesFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_headlines, container, false);
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.feeds);
+            ((MainActivity) getActivity()).showBottomNavigation();
         }
         HeadlineViewModel viewModel = new ViewModelProvider(getActivity()).get(HeadlineViewModel.class);
         viewModel.fetch();

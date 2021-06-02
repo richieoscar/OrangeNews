@@ -17,6 +17,7 @@ import com.richieoscar.orangenews.databinding.ActivityWebBinding;
 public class WebActivity extends AppCompatActivity {
 
     private String url;
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class WebActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(url);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        WebView webView = binding.webView;
+        webView = binding.webView;
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setScrollBarStyle(WebView.SCROLLBARS_INSIDE_OVERLAY);
@@ -49,8 +50,16 @@ public class WebActivity extends AppCompatActivity {
                 break;
             case R.id.web_share:
                 shareUrl();
+                break;
+            case R.id.web_reload:
+                reload();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void reload() {
+        webView.reload();
     }
 
     private void shareUrl() {

@@ -28,6 +28,7 @@ public class EntertainmentFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entertainment, container, false);
         if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.buzz_feed);
         }
         EntertainmentViewModel viewModel = new ViewModelProvider(getActivity()).get(EntertainmentViewModel.class);

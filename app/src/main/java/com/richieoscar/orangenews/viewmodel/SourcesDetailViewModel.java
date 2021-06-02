@@ -9,16 +9,16 @@ import com.richieoscar.orangenews.repository.SourcesRepository;
 
 import java.util.ArrayList;
 
-public class SourcesViewModel extends ViewModel {
+public class SourcesDetailViewModel extends ViewModel {
 
-    private LiveData<ArrayList<Source>> allSources;
+    private LiveData<ArrayList<Article>> fromSources;
     private SourcesRepository repository = new SourcesRepository();
 
     public void fetch() {
-        repository.fetchAllSources();
+        repository.fetchFromSources();
     }
 
-    public LiveData<ArrayList<Source>> getAllSources() {
-        return allSources = repository.getAllSources();
+    public LiveData<ArrayList<Article>> getFromSource() {
+        return fromSources = repository.getFromSources();
     }
 }

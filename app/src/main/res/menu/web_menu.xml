@@ -4,4 +4,7 @@
     <item
         android:id="@+id/web_share"
         android:title="@string/share_link" />
+    <item
+        android:id="@+id/web_reload"
+        android:title="Reload" />
 </menu>

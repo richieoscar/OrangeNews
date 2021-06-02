@@ -29,6 +29,7 @@ public class TechFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tech, container, false);
         if(getActivity() instanceof MainActivity){
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.tech_feeds);
         }
         TechViewModel viewModel = new ViewModelProvider(getActivity()).get(TechViewModel.class);

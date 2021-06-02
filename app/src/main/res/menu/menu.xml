@@ -4,14 +4,24 @@
     <item
         android:id="@+id/search"
         android:icon="@drawable/ic_baseline_search_24"
+        android:orderInCategory="0"
         android:title="@string/search"
         app:showAsAction="always" />
     <item
-        android:id="@+id/bookmarks"
-        android:icon="@drawable/ic_baseline_bookmarks_24"
-        android:title="@string/bookmarks"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/settings"
-        android:title="@string/settings" />
+        android:icon="@drawable/ic_baseline_clear_all_24"
+        android:orderInCategory="5"
+        android:title="Settings"
+        android:visible="false" />
+    <item
+        android:id="@+id/clear_saved"
+        android:orderInCategory="2"
+        android:title="Clear Saved"
+        android:visible="false" />
+    <item
+        android:id="@+id/clear_likes"
+        android:orderInCategory="1"
+        android:title="Clear Likes"
+        android:visible="false" />
+
 </menu>

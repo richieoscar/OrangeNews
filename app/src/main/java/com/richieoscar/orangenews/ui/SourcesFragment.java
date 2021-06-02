@@ -1,66 +1,84 @@
 package com.richieoscar.orangenews.ui;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.richieoscar.orangenews.R;
+import com.richieoscar.orangenews.adapter.SourcesAdapter;
+import com.richieoscar.orangenews.databinding.FragmentSourcesBinding;
+import com.richieoscar.orangenews.model.Source;
+import com.richieoscar.orangenews.viewmodel.SourcesViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SourcesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class SourcesFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SourcesFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SourcesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SourcesFragment newInstance(String param1, String param2) {
-        SourcesFragment fragment = new SourcesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private FragmentSourcesBinding binding;
+    private SourcesAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        //call this method to enable the fragment have control in the menu bar
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sources, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sources, container, false);
+        if (getActivity() instanceof MainActivity) {
+           ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sources);
+            ((MainActivity) getActivity()).hideBottomNavigation();
+        }
+        SourcesViewModel viewModel = new ViewModelProvider(getActivity()).get(SourcesViewModel.class);
+        viewModel.fetch();
+        viewModel.getAllSources().observe(getActivity(), sources -> {
+            setUpRecyclerView(sources);
+            hideProgressBar();
+        });
+        return binding.getRoot();
+    }
+
+    private void setUpRecyclerView(ArrayList<Source> sources) {
+        recyclerView = binding.sourceRecyclerView;
+        adapter = new SourcesAdapter(sources);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+    private void hideProgressBar(){
+        binding.progressBar.setVisibility(View.GONE);
+        binding.progressLoading.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        menu.findItem(R.id.search).setVisible(false);
+        menu.findItem(R.id.settings).setVisible(true);
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.settings:
+                Toast.makeText(getContext(), R.string.settings, Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

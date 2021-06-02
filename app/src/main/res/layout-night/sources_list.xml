@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        app:cardBackgroundColor="#171616"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +30,7 @@
                 android:backgroundTint="@color/primaryColor"
                 android:text="CNN"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="#E1424B55"
+                android:textColor="#EDE2EAF3"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -55,9 +56,8 @@
                 android:layout_marginEnd="16dp"
                 android:padding="2dp"
                 android:text="Business"
-                android:textColor="#9C3E2323"
+                android:textColor="#E36767"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/source_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/source_name" />
 
@@ -66,11 +66,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="uk"
-                android:textColor="#353B65"
                 app:layout_constraintBottom_toBottomOf="@+id/source_category"
                 app:layout_constraintEnd_toStartOf="@+id/source_category"
                 app:layout_constraintTop_toTopOf="@+id/source_category" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
