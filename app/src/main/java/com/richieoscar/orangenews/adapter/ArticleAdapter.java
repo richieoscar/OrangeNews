@@ -17,7 +17,11 @@ import com.richieoscar.orangenews.model.Article;
 import com.richieoscar.orangenews.ui.DetailActivity;
 import com.richieoscar.orangenews.ui.MainActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder> {
 
@@ -37,7 +41,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
 
     @Override
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
-        holder.bind(articles.get(position));
+            holder.bind(articles.get(position));
+
         holder.like.setOnClickListener(v -> holder.liked(articles.get(position)));
     }
 
@@ -61,6 +66,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         TextView publishedAt;
         TextView source;
         TextView description;
+        TextView time;
 
         public ArticleViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,15 +76,17 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
             like = itemView.findViewById(R.id.list_like);
             description = itemView.findViewById(R.id.description);
             publishedAt = itemView.findViewById(R.id.publishDetail);
+            time = itemView.findViewById(R.id.list_time);
             itemView.setOnClickListener(this);
             like.setOnClickListener(this);
         }
 
-        public void bind(Article article) {
+        public void bind(Article article)  {
             Glide.with(itemView.getContext()).load(article.getImageUrl()).into(imageView);
             title.setText(article.getTitle());
             description.setText(article.getDescription());
             source.setText(article.getSource().getName());
+            time.setText(formatDate(article));
         }
 
         @Override
@@ -87,8 +95,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
             displayArticleInfo(position, v);
         }
 
-        public void liked(Article article){
+        public void liked(Article article) {
             if (article != null) like.setImageResource(R.drawable.ic_like_filled);
+        }
+
+        public String formatDate(Article article) {
+            String format = article.getPublishedAt();
+            return "Today " +format.substring(11,16);
+
         }
     }
 }

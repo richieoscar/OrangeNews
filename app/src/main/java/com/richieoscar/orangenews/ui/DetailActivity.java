@@ -51,7 +51,7 @@ public class DetailActivity extends AppCompatActivity {
             viewModel.setPublished(article.getPublishedAt());
             binding.titleDetail.setText(viewModel.getTitle());
             binding.authorDetail.setText(viewModel.getAuthor());
-            binding.publishDetail.setText(viewModel.getPublished());
+            binding.publishDetail.setText(formatDate(viewModel.getPublished()));
             binding.contentDetail.setText(viewModel.getContent());
             binding.source.setText(viewModel.getSource());
             Glide.with(this).load(viewModel.getImageUrl()).into(binding.imageDetail);
@@ -91,5 +91,10 @@ public class DetailActivity extends AppCompatActivity {
                 .setText(article.getTitle() + "\n"
                         + article.getUrl() + "\n" + getString(R.string.app_name_tag))
                 .startChooser();
+    }
+
+    private String formatDate(String date) {
+        return date.substring(0,10);
+
     }
 }
