@@ -3,14 +3,33 @@ package com.richieoscar.orangenews.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+
 public class Source implements Parcelable {
+    @ColumnInfo(name = "source_id")
     private String id;
-   private String name;
-   private String description;
-   private String url;
-   private String category;
-   private String language;
-   private String country;
+    @ColumnInfo(name = "source_name")
+    private String name;
+    @ColumnInfo(name = "source_description")
+    private String description;
+    @ColumnInfo(name = "source_url")
+    private String url;
+    @ColumnInfo(name = "source_category")
+    private String category;
+    @ColumnInfo(name = "source_language")
+    private String language;
+    @ColumnInfo(name = "source_country")
+    private String country;
+
+    public Source(String id, String name, String description, String url, String category, String language, String country) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.category = category;
+        this.language = language;
+        this.country = country;
+    }
 
     protected Source(Parcel in) {
         id = in.readString();

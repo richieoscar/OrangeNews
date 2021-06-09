@@ -1,16 +1,18 @@
 package com.richieoscar.orangenews.ui;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.ArticleAdapter;
@@ -21,7 +23,8 @@ import com.richieoscar.orangenews.viewmodel.LocalSportsViewModel;
 import java.util.ArrayList;
 
 public class LocalSportsFragment extends Fragment {
-        private FragmentLocalSportsBinding binding;
+    private FragmentLocalSportsBinding binding;
+    private LocalSportsViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,13 +35,17 @@ public class LocalSportsFragment extends Fragment {
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sports_feed);
         }
-        LocalSportsViewModel viewModel = new ViewModelProvider(getActivity()).get(LocalSportsViewModel.class);
-        viewModel.fetch();
-        viewModel.getLocalSportNews().observe(getActivity(), articles -> {
+        viewModel = new ViewModelProvider(getActivity()).get(LocalSportsViewModel.class);
+
+        if (isNetworkConnected()) {
+            viewModel.fetch();
+            hideNetworkAlert();
+        } else {
+            showNetworkAlert();
             hideProgressbar();
-            setUpRecyclerView(articles);
-        });
-        return  binding.getRoot();
+            tryAgain();
+        }
+        return binding.getRoot();
     }
 
     private void hideProgressbar() {
@@ -46,11 +53,53 @@ public class LocalSportsFragment extends Fragment {
         binding.sportsLoading.setVisibility(View.INVISIBLE);
     }
 
-    private void setUpRecyclerView(ArrayList<Article> sportNews){
+    private void showProgressbar() {
+        binding.sportsProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void setUpRecyclerView(ArrayList<Article> sportNews) {
         ArticleAdapter adapter = new ArticleAdapter(sportNews);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         binding.sportsRecyclerView.setAdapter(adapter);
         binding.sportsRecyclerView.setLayoutManager(layoutManager);
     }
 
+    private void tryAgain() {
+        binding.tryAgain.setOnClickListener(v -> {
+            if (isNetworkConnected()) {
+                hide();
+                showProgressbar();
+                viewModel.fetch();
+                hideNetworkAlert();
+            } else {
+                Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void showNetworkAlert() {
+        binding.imageNetwork.setVisibility(View.VISIBLE);
+        binding.networkText.setVisibility(View.VISIBLE);
+        binding.tryAgain.setVisibility(View.VISIBLE);
+    }
+
+    private void hideNetworkAlert() {
+        viewModel.getLocalSportNews().observe(getActivity(), articles -> {
+            hideProgressbar();
+            setUpRecyclerView(articles);
+            hide();
+        });
+    }
+
+    private void hide() {
+        binding.imageNetwork.setVisibility(View.INVISIBLE);
+        binding.networkText.setVisibility(View.INVISIBLE);
+        binding.tryAgain.setVisibility(View.INVISIBLE);
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
 }

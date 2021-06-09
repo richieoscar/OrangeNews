@@ -8,22 +8,34 @@ import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Likes")
-public class Article implements Parcelable {
+@Entity(tableName = "saved_articles")
+public class SavedArticle implements Parcelable {
+
+    public static final Creator<SavedArticle> CREATOR = new Creator<SavedArticle>() {
+        @Override
+        public SavedArticle createFromParcel(Parcel in) {
+            return new SavedArticle(in);
+        }
+
+        @Override
+        public SavedArticle[] newArray(int size) {
+            return new SavedArticle[size];
+        }
+    };
     @Embedded
     private Source source;
+    private String author;
     @NonNull
     @PrimaryKey
     private String title;
-    private String author;
-    private int imageRes;
     private String description;
     private String url;
     private String urlToImage;
     private String publishedAt;
     private String content;
+    private int imageRes;
 
-    public Article(Source source, String author, String title, String description, String url, String urlToImage, String publishedAt, String content, int imageRes) {
+    public SavedArticle(Source source, String author, @NonNull String title, String description, String url, String urlToImage, String publishedAt, String content, int imageRes) {
         this.source = source;
         this.author = author;
         this.title = title;
@@ -35,7 +47,12 @@ public class Article implements Parcelable {
         this.imageRes = imageRes;
     }
 
-    protected Article(Parcel in) {
+    public SavedArticle() {
+
+    }
+
+    protected SavedArticle(Parcel in) {
+        source = in.readParcelable(Source.class.getClassLoader());
         author = in.readString();
         title = in.readString();
         description = in.readString();
@@ -43,57 +60,72 @@ public class Article implements Parcelable {
         urlToImage = in.readString();
         publishedAt = in.readString();
         content = in.readString();
-        source = in.readParcelable(Source.class.getClassLoader());
         imageRes = in.readInt();
     }
 
-    public static final Creator<Article> CREATOR = new Creator<Article>() {
-        @Override
-        public Article createFromParcel(Parcel in) {
-            return new Article(in);
-        }
-
-        @Override
-        public Article[] newArray(int size) {
-            return new Article[size];
-        }
-    };
-
     public Source getSource() {
         return source;
+    }
+
+    public void setSource(Source source) {
+        this.source = source;
     }
 
     public String getAuthor() {
         return author;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    @NonNull
     public String getTitle() {
         return title;
     }
 
-    public String getDescription(){
+    public void setTitle(@NonNull String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUrl() {
         return url;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getUrlToImage() {
         return urlToImage;
+    }
+
+    public void setUrlToImage(String urlToImage) {
+        this.urlToImage = urlToImage;
     }
 
     public String getPublishedAt() {
         return publishedAt;
     }
 
+    public void setPublishedAt(String publishedAt) {
+        this.publishedAt = publishedAt;
+    }
+
     public String getContent() {
         return content;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getImageRes() {
@@ -104,8 +136,15 @@ public class Article implements Parcelable {
         this.imageRes = imageRes;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(source, flags);
         dest.writeString(author);
         dest.writeString(title);
         dest.writeString(description);
@@ -113,7 +152,6 @@ public class Article implements Parcelable {
         dest.writeString(urlToImage);
         dest.writeString(publishedAt);
         dest.writeString(content);
-        dest.writeParcelable(source, 0);
         dest.writeInt(imageRes);
     }
 }

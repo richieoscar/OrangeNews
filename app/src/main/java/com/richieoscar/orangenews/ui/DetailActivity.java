@@ -16,12 +16,14 @@ import com.bumptech.glide.Glide;
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.databinding.ActivityDetailBinding;
 import com.richieoscar.orangenews.model.Article;
+import com.richieoscar.orangenews.model.SavedArticle;
 import com.richieoscar.orangenews.viewmodel.DetailViewModel;
 
 public class DetailActivity extends AppCompatActivity {
     private ActivityDetailBinding binding;
     private DetailViewModel viewModel;
     private Article article;
+    private SavedArticle savedArticle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,9 @@ public class DetailActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
         article = getIntent().getParcelableExtra(getString(R.string.article));
+        savedArticle = getIntent().getParcelableExtra(getString(R.string.saved_article));
         display(article);
+        displaySavedArticle(savedArticle);
         readFullArticle();
     }
 
@@ -47,7 +51,7 @@ public class DetailActivity extends AppCompatActivity {
             viewModel.setContent(article.getContent());
             viewModel.setTitle(article.getTitle());
             viewModel.setSource(article.getSource().getName());
-            viewModel.setImageUrl(article.getImageUrl());
+            viewModel.setImageUrl(article.getUrlToImage());
             viewModel.setPublished(article.getPublishedAt());
             binding.titleDetail.setText(viewModel.getTitle());
             binding.authorDetail.setText(viewModel.getAuthor());
@@ -55,6 +59,25 @@ public class DetailActivity extends AppCompatActivity {
             binding.contentDetail.setText(viewModel.getContent());
             binding.source.setText(viewModel.getSource());
             Glide.with(this).load(viewModel.getImageUrl()).into(binding.imageDetail);
+
+        }
+    }
+
+    private void displaySavedArticle(SavedArticle article) {
+        if (article != null) {
+            viewModel.setAuthor(article.getAuthor());
+            viewModel.setContent(article.getContent());
+            viewModel.setTitle(article.getTitle());
+            viewModel.setSource(article.getSource().getName());
+            viewModel.setImageUrl(article.getUrlToImage());
+            viewModel.setPublished(article.getPublishedAt());
+            binding.titleDetail.setText(viewModel.getTitle());
+            binding.authorDetail.setText(viewModel.getAuthor());
+            binding.publishDetail.setText(formatDate(viewModel.getPublished()));
+            binding.contentDetail.setText(viewModel.getContent());
+            binding.source.setText(viewModel.getSource());
+            Glide.with(this).load(viewModel.getImageUrl()).into(binding.imageDetail);
+
         }
     }
 
@@ -81,7 +104,18 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void addToBookMark() {
-        Toast.makeText(this, R.string.add_to_bookmarks, Toast.LENGTH_SHORT).show();
+        SavedArticle savedArticle = new SavedArticle();
+        savedArticle.setAuthor(article.getAuthor());
+        savedArticle.setContent(article.getContent());
+        savedArticle.setDescription(article.getDescription());
+        savedArticle.setPublishedAt(article.getPublishedAt());
+        savedArticle.setTitle(article.getTitle());
+        savedArticle.setSource(article.getSource());
+        savedArticle.setUrl(article.getUrl());
+        savedArticle.setUrlToImage(article.getUrlToImage());
+        savedArticle.setImageRes(article.getImageRes());
+        viewModel.saveArticle(savedArticle);
+        Toast.makeText(this, R.string.save_article, Toast.LENGTH_SHORT).show();
     }
 
     private void shareArticle() {

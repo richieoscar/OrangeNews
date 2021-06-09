@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -32,15 +33,14 @@ public class LatestFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_latest, container, false);
         viewModel = new ViewModelProvider(getActivity()).get(LatestViewModel.class);
-        if(isNetworkConnected()){
-        viewModel.fetch();
-        hideNetworkAlert();
-        }
-        else {
+        if (isNetworkConnected()) {
+            viewModel.fetch();
+            hideNetworkAlert();
+        } else {
             showNetworkAlert();
             hideProgressbar();
+            tryAgain();
         }
-        
         return binding.getRoot();
     }
 
@@ -48,16 +48,38 @@ public class LatestFragment extends Fragment {
         viewModel.getLatestNews().observe(getActivity(), articles -> {
             hideProgressbar();
             setUpRecyclerView(articles);
-            binding.imageNetwork.setVisibility(View.INVISIBLE);
-            binding.networkText.setVisibility(View.INVISIBLE);
+            hide();
         });
     }
 
     private void showNetworkAlert() {
         binding.imageNetwork.setVisibility(View.VISIBLE);
         binding.networkText.setVisibility(View.VISIBLE);
+        binding.tryAgain.setVisibility(View.VISIBLE);
     }
 
+    private void showProgressbar() {
+        binding.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void tryAgain() {
+        binding.tryAgain.setOnClickListener(v -> {
+            if (isNetworkConnected()) {
+                hide();
+                showProgressbar();
+                viewModel.fetch();
+                hideNetworkAlert();
+            } else {
+                Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void hide() {
+        binding.imageNetwork.setVisibility(View.INVISIBLE);
+        binding.networkText.setVisibility(View.INVISIBLE);
+        binding.tryAgain.setVisibility(View.INVISIBLE);
+    }
 
 
     private void hideProgressbar() {
@@ -70,7 +92,6 @@ public class LatestFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         binding.latestRecyclerView.setAdapter(adapter);
         binding.latestRecyclerView.setLayoutManager(layoutManager);
-
     }
 
     private boolean isNetworkConnected() {

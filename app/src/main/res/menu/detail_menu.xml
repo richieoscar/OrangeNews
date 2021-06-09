@@ -8,7 +8,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/add_to_bookmark"
-        android:icon="@drawable/ic_baseline_bookmark_border_24"
+        android:icon="@drawable/ic_baseline_bookmark_24"
         android:title="@string/saved"
         app:showAsAction="always" />
     <item android:title="Settings" />

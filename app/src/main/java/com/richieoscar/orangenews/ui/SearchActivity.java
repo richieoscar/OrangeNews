@@ -1,7 +1,11 @@
 package com.richieoscar.orangenews.ui;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -30,21 +34,48 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         viewModel = new ViewModelProvider(this).get(SearchViewModel.class);
+        binding.searchResults.requestFocus();
         search();
     }
 
     private void search() {
+
         binding.buttonSearch.setOnClickListener(v -> {
-            query = binding.searchView.getText().toString();
-            binding.searchResults.setText(R.string.searching);
-            viewModel.setQuery(query);
-            viewModel.fetch();
-            viewModel.getSearchResult().observe(this, articles -> {
-                setUpRecyclerView(articles);
-                binding.searchResults.setText(getString(R.string.results) + articles.size() + getString(R.string.found) +viewModel.getQuery());
-                Log.d(TAG, "onCreate: results" + articles.size());
-            });
-            binding.searchView.setText("");
+            if (isNetworkConnected()) {
+                hide();
+                doSearch();
+            } else {
+                binding.searchResults.setText("Oops!, could not carry out search");
+                binding.searchRecylerview.setVisibility(View.GONE);
+                showNetworkAlert();
+                tryAgain();
+            }
+        });
+    }
+
+    private void doSearch() {
+        binding.progressBar2.setVisibility(View.VISIBLE);
+        query = binding.searchView.getText().toString();
+        binding.searchResults.setText(R.string.searching);
+        viewModel.setQuery(query);
+        viewModel.fetch();
+        viewModel.getSearchResult().observe(this, articles -> {
+            setUpRecyclerView(articles);
+            binding.searchResults.setText(getString(R.string.results) + articles.size() + getString(R.string.found) + viewModel.getQuery());
+            binding.progressBar2.setVisibility(View.INVISIBLE);
+            Log.d(TAG, "onCreate: results" + articles.size());
+        });
+        binding.searchView.setText("");
+    }
+
+    private void tryAgain() {
+        binding.tryAgain.setOnClickListener(v -> {
+            if (isNetworkConnected()) {
+                hide();
+                doSearch();
+            } else {
+                Toast.makeText(this, "Unable to Connect", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -53,5 +84,24 @@ public class SearchActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         binding.searchRecylerview.setAdapter(adapter);
         binding.searchRecylerview.setLayoutManager(layoutManager);
+        binding.searchRecylerview.setVisibility(View.VISIBLE);
+    }
+
+    private void showNetworkAlert() {
+        binding.imageNetwork.setVisibility(View.VISIBLE);
+        binding.networkText.setVisibility(View.VISIBLE);
+        binding.tryAgain.setVisibility(View.VISIBLE);
+    }
+
+    private void hide() {
+        binding.imageNetwork.setVisibility(View.INVISIBLE);
+        binding.networkText.setVisibility(View.INVISIBLE);
+        binding.tryAgain.setVisibility(View.INVISIBLE);
+    }
+
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 }

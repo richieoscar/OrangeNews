@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EDEEF1"
+        android:background="@color/darkMode"
         android:elevation="3dp"
         tools:context=".ui.SearchActivity">
 
@@ -38,6 +38,7 @@
             android:ems="10"
             android:hint="@string/search_here"
             android:inputType="textPersonName"
+            android:textColorHint="#3E070707"
             app:layout_constraintEnd_toStartOf="@+id/button_search"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

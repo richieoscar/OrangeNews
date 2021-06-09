@@ -1,14 +1,26 @@
 package com.richieoscar.orangenews.viewmodel;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
 
-public class DetailViewModel extends ViewModel {
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+
+import com.richieoscar.orangenews.model.SavedArticle;
+import com.richieoscar.orangenews.repository.SavedArticleRepository;
+
+public class DetailViewModel extends AndroidViewModel {
     private String title;
     private String author;
     private String source;
     private String imageUrl;
     private String published;
     private String content;
+    private SavedArticleRepository repository;
+
+    public DetailViewModel(@NonNull Application application) {
+        super(application);
+        repository = new SavedArticleRepository(application);
+    }
 
     public String getTitle() {
         return title;
@@ -56,5 +68,9 @@ public class DetailViewModel extends ViewModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public void saveArticle(SavedArticle article) {
+        repository.saveArticle(article);
     }
 }

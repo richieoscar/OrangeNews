@@ -1,12 +1,13 @@
 package com.richieoscar.orangenews.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,21 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.model.Article;
+import com.richieoscar.orangenews.repository.LikesRepository;
 import com.richieoscar.orangenews.ui.DetailActivity;
-import com.richieoscar.orangenews.ui.MainActivity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder> {
 
     private ArrayList<Article> articles;
+    private Context context;
+
 
     public ArticleAdapter(ArrayList<Article> articles) {
         this.articles = articles;
+    }
+
+    public ArticleAdapter(ArrayList<Article> articles, Context context) {
+        this.articles = articles;
+        this.context = context;
     }
 
     @NonNull
@@ -41,8 +45,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
 
     @Override
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
-            holder.bind(articles.get(position));
-
+        holder.bind(articles.get(position));
         holder.like.setOnClickListener(v -> holder.liked(articles.get(position)));
     }
 
@@ -60,13 +63,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
 
 
     public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView imageView;
-        ImageView like;
-        TextView title;
-        TextView publishedAt;
-        TextView source;
-        TextView description;
-        TextView time;
+        private ImageView imageView;
+        private ImageView like;
+        private TextView title;
+        private TextView publishedAt;
+        private TextView source;
+        private TextView description;
+        private TextView time;
+        private LikesRepository repository = new LikesRepository();
 
         public ArticleViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,10 +83,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
             time = itemView.findViewById(R.id.list_time);
             itemView.setOnClickListener(this);
             like.setOnClickListener(this);
+            repository.setContext(itemView.getContext());
         }
 
-        public void bind(Article article)  {
-            Glide.with(itemView.getContext()).load(article.getImageUrl()).into(imageView);
+        private void bind(Article article) {
+            Glide.with(itemView.getContext()).load(article.getUrlToImage()).into(imageView);
             title.setText(article.getTitle());
             description.setText(article.getDescription());
             source.setText(article.getSource().getName());
@@ -95,14 +100,16 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
             displayArticleInfo(position, v);
         }
 
-        public void liked(Article article) {
-            if (article != null) like.setImageResource(R.drawable.ic_like_filled);
+        private void liked(Article article) {
+            repository.addToLikes(article);
+            article.setImageRes(R.color.red);
+            like.setColorFilter(article.getImageRes());
+            Toast.makeText(repository.getContext(), "Added to Likes", Toast.LENGTH_SHORT).show();
         }
 
-        public String formatDate(Article article) {
+        private String formatDate(Article article) {
             String format = article.getPublishedAt();
-            return "Today " +format.substring(11,16);
-
+            return "Today " + format.substring(11, 16);
         }
     }
 }

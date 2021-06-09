@@ -1,5 +1,7 @@
 package com.richieoscar.orangenews.ui;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +30,7 @@ public class SourcesFragment extends Fragment {
     private FragmentSourcesBinding binding;
     private SourcesAdapter adapter;
     private RecyclerView recyclerView;
+    private SourcesViewModel viewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,15 +45,18 @@ public class SourcesFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sources, container, false);
         // Inflate the layout for this fragment
         if (getActivity() instanceof MainActivity) {
-           ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sources);
+            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sources);
             ((MainActivity) getActivity()).hideBottomNavigation();
         }
-        SourcesViewModel viewModel = new ViewModelProvider(getActivity()).get(SourcesViewModel.class);
-        viewModel.fetch();
-        viewModel.getAllSources().observe(getActivity(), sources -> {
-            setUpRecyclerView(sources);
-            hideProgressBar();
-        });
+        viewModel = new ViewModelProvider(getActivity()).get(SourcesViewModel.class);
+        if (isNetworkConnected()) {
+            viewModel.fetch();
+            hideNetworkAlert();
+        } else {
+            showNetworkAlert();
+            hideProgressbar();
+            tryAgain();
+        }
         return binding.getRoot();
     }
 
@@ -74,11 +80,58 @@ public class SourcesFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.settings:
                 Toast.makeText(getContext(), R.string.settings, Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void hideNetworkAlert() {
+        viewModel.getAllSources().observe(getActivity(), articles -> {
+            hideProgressbar();
+            setUpRecyclerView(articles);
+            hide();
+        });
+    }
+
+    private void showNetworkAlert() {
+        binding.imageNetwork.setVisibility(View.VISIBLE);
+        binding.networkText.setVisibility(View.VISIBLE);
+        binding.tryAgain.setVisibility(View.VISIBLE);
+    }
+
+    private void showProgressbar() {
+        binding.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressbar() {
+        binding.progressBar.setVisibility(View.INVISIBLE);
+        binding.progressLoading.setVisibility(View.INVISIBLE);
+    }
+
+    private void tryAgain() {
+        binding.tryAgain.setOnClickListener(v -> {
+            if (isNetworkConnected()) {
+                hide();
+                showProgressbar();
+                viewModel.fetch();
+                hideNetworkAlert();
+            } else {
+                Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void hide() {
+        binding.imageNetwork.setVisibility(View.INVISIBLE);
+        binding.networkText.setVisibility(View.INVISIBLE);
+        binding.tryAgain.setVisibility(View.INVISIBLE);
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 }

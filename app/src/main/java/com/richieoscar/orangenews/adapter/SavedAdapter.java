@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,17 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.model.Article;
+import com.richieoscar.orangenews.model.SavedArticle;
+import com.richieoscar.orangenews.repository.LikesRepository;
 import com.richieoscar.orangenews.ui.DetailActivity;
 
 import java.util.ArrayList;
 
-public class SourcesDetailAdapter extends RecyclerView.Adapter<SourcesDetailAdapter.ArticleViewHolder> {
+public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ArticleViewHolder> {
 
-    private ArrayList<Article> articles;
+    private ArrayList<SavedArticle> articles;
 
-    public SourcesDetailAdapter( ArrayList<Article> articles) {
+    public SavedAdapter(ArrayList<SavedArticle> articles) {
         this.articles = articles;
     }
+
 
     @NonNull
     @Override
@@ -36,6 +40,7 @@ public class SourcesDetailAdapter extends RecyclerView.Adapter<SourcesDetailAdap
     @Override
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
         holder.bind(articles.get(position));
+        // holder.like.setOnClickListener(v -> holder.liked(articles.get(position)));
     }
 
     @Override
@@ -44,20 +49,21 @@ public class SourcesDetailAdapter extends RecyclerView.Adapter<SourcesDetailAdap
     }
 
     private void displayArticleInfo(int position, View v) {
-        //Article article = sources.get(position);
+        SavedArticle article = articles.get(position);
         Intent intent = new Intent(v.getContext(), DetailActivity.class);
-        // intent.putExtra("Article", article);
+        intent.putExtra("SavedArticle", article);
         v.getContext().startActivity(intent);
     }
 
 
     public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView imageView;
-        ImageView like;
-        TextView title;
-        TextView publishedAt;
-        TextView source;
-        TextView description;
+        private ImageView imageView;
+        private ImageView like;
+        private TextView title;
+        private TextView publishedAt;
+        private TextView source;
+        private TextView time;
+        private LikesRepository repository = new LikesRepository();
 
         public ArticleViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,21 +71,36 @@ public class SourcesDetailAdapter extends RecyclerView.Adapter<SourcesDetailAdap
             source = itemView.findViewById(R.id.list_source);
             imageView = itemView.findViewById(R.id.list_image);
             like = itemView.findViewById(R.id.list_like);
-            description = itemView.findViewById(R.id.description);
             publishedAt = itemView.findViewById(R.id.publishDetail);
+            time = itemView.findViewById(R.id.list_time);
             itemView.setOnClickListener(this);
+            like.setOnClickListener(this);
+            repository.setContext(itemView.getContext());
         }
 
-        public void bind(Article article) {
+
+        private void bind(SavedArticle article) {
             Glide.with(itemView.getContext()).load(article.getUrlToImage()).into(imageView);
             title.setText(article.getTitle());
-            description.setText(article.getDescription());
             source.setText(article.getSource().getName());
+            time.setText(formatDate(article));
+            like.setEnabled(false);
         }
 
         @Override
         public void onClick(View v) {
+            int position = getAdapterPosition();
+            displayArticleInfo(position, v);
         }
 
+        private void liked(Article article) {
+            repository.addToLikes(article);
+            Toast.makeText(repository.getContext(), "Removed from likes", Toast.LENGTH_SHORT).show();
+        }
+
+        private String formatDate(SavedArticle article) {
+            String format = article.getPublishedAt();
+            return format.substring(0, 10);
+        }
     }
 }

@@ -1,9 +1,12 @@
 package com.richieoscar.orangenews.ui;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -22,6 +25,7 @@ import java.util.ArrayList;
 public class BusinessFragment extends Fragment {
 
     private FragmentBusinessBinding binding;
+    private BusinessViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,12 +37,15 @@ public class BusinessFragment extends Fragment {
             ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.business_feeds);
 
         }
-        BusinessViewModel viewModel = new ViewModelProvider(getActivity()).get(BusinessViewModel.class);
-        viewModel.fetch();
-        viewModel.getBusinessNews().observe(getActivity(), articles -> {
+        viewModel = new ViewModelProvider(getActivity()).get(BusinessViewModel.class);
+        if (isNetworkConnected()) {
+            viewModel.fetch();
+            hideNetworkAlert();
+        } else {
+            showNetworkAlert();
             hideProgressbar();
-            setUpRecyclerView(articles);
-        });
+            tryAgain();
+        }
         return binding.getRoot();
     }
 
@@ -52,5 +59,47 @@ public class BusinessFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         binding.businessRecyclerView.setAdapter(adapter);
         binding.businessRecyclerView.setLayoutManager(layoutManager);
+    }
+
+    private void hideNetworkAlert() {
+        viewModel.getBusinessNews().observe(getActivity(), articles -> {
+            hideProgressbar();
+            setUpRecyclerView(articles);
+            hide();
+        });
+    }
+
+    private void showNetworkAlert() {
+        binding.imageNetwork.setVisibility(View.VISIBLE);
+        binding.networkText.setVisibility(View.VISIBLE);
+        binding.tryAgain.setVisibility(View.VISIBLE);
+    }
+
+    private void showProgressbar() {
+        binding.businessProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void tryAgain() {
+        binding.tryAgain.setOnClickListener(v -> {
+            if (isNetworkConnected()) {
+                hide();
+                showProgressbar();
+                viewModel.fetch();
+                hideNetworkAlert();
+            } else {
+                Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void hide() {
+        binding.imageNetwork.setVisibility(View.INVISIBLE);
+        binding.networkText.setVisibility(View.INVISIBLE);
+        binding.tryAgain.setVisibility(View.INVISIBLE);
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 }
