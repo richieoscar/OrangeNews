@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +22,7 @@ import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.SavedAdapter;
 import com.richieoscar.orangenews.databinding.FragmentSavedBinding;
 import com.richieoscar.orangenews.model.SavedArticle;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
 import com.richieoscar.orangenews.viewmodel.SavedArticleViewModel;
 
 import java.util.ArrayList;

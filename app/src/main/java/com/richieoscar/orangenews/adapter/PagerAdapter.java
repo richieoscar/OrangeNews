@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.richieoscar.orangenews.ui.HeadlinesFragment;
-import com.richieoscar.orangenews.ui.LatestFragment;
+import com.richieoscar.orangenews.ui.fragments.HeadlinesFragment;
+import com.richieoscar.orangenews.ui.fragments.LatestFragment;
 
 public class PagerAdapter extends FragmentPagerAdapter {
     public PagerAdapter(@NonNull FragmentManager fm) {

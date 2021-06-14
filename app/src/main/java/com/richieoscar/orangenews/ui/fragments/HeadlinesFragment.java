@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.fragments;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -16,28 +16,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.ArticleAdapter;
-import com.richieoscar.orangenews.databinding.FragmentTechBinding;
+import com.richieoscar.orangenews.databinding.FragmentHeadlinesBinding;
 import com.richieoscar.orangenews.model.Article;
-import com.richieoscar.orangenews.viewmodel.TechViewModel;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
+import com.richieoscar.orangenews.viewmodel.HeadlineViewModel;
 
 import java.util.ArrayList;
 
 
-public class TechFragment extends Fragment {
-    private FragmentTechBinding binding;
-    private TechViewModel viewModel;
+public class HeadlinesFragment extends Fragment {
+    FragmentHeadlinesBinding binding;
+    private HeadlineViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tech, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_headlines, container, false);
+        viewModel = new ViewModelProvider(getActivity()).get(HeadlineViewModel.class);
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.tech_feeds);
+            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.feeds);
+            ((MainActivity) getActivity()).showBottomNavigation();
         }
-        viewModel = new ViewModelProvider(getActivity()).get(TechViewModel.class);
-
         if (isNetworkConnected()) {
             viewModel.fetch();
             hideNetworkAlert();
@@ -46,26 +46,14 @@ public class TechFragment extends Fragment {
             hideProgressbar();
             tryAgain();
         }
+
         return binding.getRoot();
     }
 
-    private void hideProgressbar() {
-        binding.techProgressBar.setVisibility(View.INVISIBLE);
-        binding.techLoading.setVisibility(View.INVISIBLE);
-    }
-
-    private void setUpRecyclerView(ArrayList<Article> techNews) {
-        ArticleAdapter adapter = new ArticleAdapter(techNews);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        binding.techRecyclerView.setAdapter(adapter);
-        binding.techRecyclerView.setLayoutManager(layoutManager);
-    }
-
     private void hideNetworkAlert() {
-        viewModel.getTechNews().observe(getActivity(), articles -> {
+        viewModel.getHeadlines().observe(getActivity(), articles -> {
             hideProgressbar();
             setUpRecyclerView(articles);
-            hide();
         });
     }
 
@@ -75,8 +63,31 @@ public class TechFragment extends Fragment {
         binding.tryAgain.setVisibility(View.VISIBLE);
     }
 
+    private void hideProgressbar() {
+        binding.headlineProgressBar.setVisibility(View.INVISIBLE);
+        binding.progressLoading.setVisibility(View.INVISIBLE);
+    }
+
     private void showProgressbar() {
-        binding.techProgressBar.setVisibility(View.VISIBLE);
+        binding.headlineProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void setUpRecyclerView(ArrayList<Article> articles) {
+        ArticleAdapter adapter = new ArticleAdapter(articles);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        binding.headlineRecyclerView.setAdapter(adapter);
+        binding.headlineRecyclerView.setLayoutManager(layoutManager);
+    }
+
+    private void hide() {
+        binding.imageNetwork.setVisibility(View.INVISIBLE);
+        binding.networkText.setVisibility(View.INVISIBLE);
+        binding.tryAgain.setVisibility(View.INVISIBLE);
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
     private void tryAgain() {
@@ -87,21 +98,8 @@ public class TechFragment extends Fragment {
                 viewModel.fetch();
                 hideNetworkAlert();
             } else {
-                Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Unable to Connect", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-    private void hide() {
-        binding.imageNetwork.setVisibility(View.INVISIBLE);
-        binding.networkText.setVisibility(View.INVISIBLE);
-        binding.tryAgain.setVisibility(View.INVISIBLE);
-    }
-
-
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
-    }
-
 }

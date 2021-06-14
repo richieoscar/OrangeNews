@@ -16,28 +16,30 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.OrangeNews.NoActionBar" >
-        </activity>
+            android:theme="@style/Theme.OrangeNews"></activity>
         <activity
-            android:name=".ui.SplashActivity"
-            android:theme="@style/myTheme" >
+            android:name=".ui.activities.SplashActivity"
+            android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.WebActivity" />
         <activity
-            android:name=".ui.SearchActivity"
+            android:name=".ui.activities.WebActivity"
+            android:theme="@style/ActionBarTheme" />
+        <activity
+            android:name=".ui.activities.SearchActivity"
             android:label="@string/search"
-            android:parentActivityName=".ui.MainActivity" />
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:theme="@style/ActionBarTheme" />
         <activity
-            android:name=".ui.DetailActivity"
+            android:name=".ui.activities.DetailActivity"
             android:label="Article"
-            android:parentActivityName=".ui.MainActivity" />
-        <activity android:name=".ui.MainActivity" >
-        </activity>
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:theme="@style/ActionBarTheme" />
+        <activity android:name=".ui.activities.MainActivity"></activity>
     </application>
 
 </manifest>

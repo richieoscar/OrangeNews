@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.model.Source;
-import com.richieoscar.orangenews.ui.MainActivity;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
 
 import java.util.ArrayList;
 

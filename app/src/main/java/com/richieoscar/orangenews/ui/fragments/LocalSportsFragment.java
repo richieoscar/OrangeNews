@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.fragments;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -16,25 +16,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.ArticleAdapter;
-import com.richieoscar.orangenews.databinding.FragmentSportUKBinding;
+import com.richieoscar.orangenews.databinding.FragmentLocalSportsBinding;
 import com.richieoscar.orangenews.model.Article;
-import com.richieoscar.orangenews.viewmodel.SportsUkViewModel;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
+import com.richieoscar.orangenews.viewmodel.LocalSportsViewModel;
 
 import java.util.ArrayList;
 
-
-public class SportUKFragment extends Fragment {
-
-    FragmentSportUKBinding binding;
-    private SportsUkViewModel viewModel;
-
+public class LocalSportsFragment extends Fragment {
+    private FragmentLocalSportsBinding binding;
+    private LocalSportsViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sport_u_k, container, false);
-        viewModel = new ViewModelProvider(getActivity()).get(SportsUkViewModel.class);
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_local_sports, container, false);
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sports_feed);
+        }
+        viewModel = new ViewModelProvider(getActivity()).get(LocalSportsViewModel.class);
+
         if (isNetworkConnected()) {
             viewModel.fetch();
             hideNetworkAlert();
@@ -51,29 +54,15 @@ public class SportUKFragment extends Fragment {
         binding.sportsLoading.setVisibility(View.INVISIBLE);
     }
 
+    private void showProgressbar() {
+        binding.sportsProgressBar.setVisibility(View.VISIBLE);
+    }
+
     private void setUpRecyclerView(ArrayList<Article> sportNews) {
         ArticleAdapter adapter = new ArticleAdapter(sportNews);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         binding.sportsRecyclerView.setAdapter(adapter);
         binding.sportsRecyclerView.setLayoutManager(layoutManager);
-    }
-
-    private void hideNetworkAlert() {
-        viewModel.getSportNews().observe(getActivity(), articles -> {
-            hideProgressbar();
-            setUpRecyclerView(articles);
-            hide();
-        });
-    }
-
-    private void showNetworkAlert() {
-        binding.imageNetwork.setVisibility(View.VISIBLE);
-        binding.networkText.setVisibility(View.VISIBLE);
-        binding.tryAgain.setVisibility(View.VISIBLE);
-    }
-
-    private void showProgressbar() {
-        binding.sportsProgressBar.setVisibility(View.VISIBLE);
     }
 
     private void tryAgain() {
@@ -87,6 +76,21 @@ public class SportUKFragment extends Fragment {
                 Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    private void showNetworkAlert() {
+        binding.imageNetwork.setVisibility(View.VISIBLE);
+        binding.networkText.setVisibility(View.VISIBLE);
+        binding.tryAgain.setVisibility(View.VISIBLE);
+    }
+
+    private void hideNetworkAlert() {
+        viewModel.getLocalSportNews().observe(getActivity(), articles -> {
+            hideProgressbar();
+            setUpRecyclerView(articles);
+            hide();
+        });
     }
 
     private void hide() {
@@ -95,11 +99,8 @@ public class SportUKFragment extends Fragment {
         binding.tryAgain.setVisibility(View.INVISIBLE);
     }
 
-
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
-
-
 }

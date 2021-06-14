@@ -2,17 +2,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
         <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_baseline_search_24"
+            android:title="Search" />
+        <item
             android:id="@+id/likes"
-            android:icon="@drawable/ic_baseline_favorite_24"
+            android:icon="@drawable/ic_baseline_favorite"
             android:title="Likes" />
         <item
             android:id="@+id/saved"
-            android:icon="@drawable/ic_baseline_bookmarks_24"
+            android:icon="@drawable/ic_baseline_bookmarks"
             android:title="Saved Articles" />
         <item
             android:id="@+id/sources"
-            android:icon="@drawable/ic_sources"
+            android:icon="@drawable/ic_baseline_source"
             android:title="Sources" />
     </group>
+
+    <item android:title="Communication">
+        <menu>
+            <item
+                android:id="@+id/share"
+                android:icon="@drawable/ic_baseline_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="Settings" />
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/ic_baseline_sentiment_very_satisfied_24"
+                android:title="About Us" />
+        </menu>
+    </item>
 
 </menu>

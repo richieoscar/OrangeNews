@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.activities;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -61,7 +61,7 @@ public class SearchActivity extends AppCompatActivity {
         viewModel.fetch();
         viewModel.getSearchResult().observe(this, articles -> {
             setUpRecyclerView(articles);
-            binding.searchResults.setText(getString(R.string.results) + articles.size() + getString(R.string.found) + viewModel.getQuery());
+            binding.searchResults.setText(getString(R.string.results) + " " + articles.size() + " " + getString(R.string.found) + viewModel.getQuery());
             binding.progressBar2.setVisibility(View.INVISIBLE);
             Log.d(TAG, "onCreate: results" + articles.size());
         });

@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.fragments;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -16,27 +16,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.ArticleAdapter;
-import com.richieoscar.orangenews.databinding.FragmentLocalSportsBinding;
+import com.richieoscar.orangenews.databinding.FragmentBusinessBinding;
 import com.richieoscar.orangenews.model.Article;
-import com.richieoscar.orangenews.viewmodel.LocalSportsViewModel;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
+import com.richieoscar.orangenews.viewmodel.BusinessViewModel;
 
 import java.util.ArrayList;
 
-public class LocalSportsFragment extends Fragment {
-    private FragmentLocalSportsBinding binding;
-    private LocalSportsViewModel viewModel;
+public class BusinessFragment extends Fragment {
+
+    private FragmentBusinessBinding binding;
+    private BusinessViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_local_sports, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business, container, false);
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sports_feed);
-        }
-        viewModel = new ViewModelProvider(getActivity()).get(LocalSportsViewModel.class);
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.business_feeds);
 
+        }
+        viewModel = new ViewModelProvider(getActivity()).get(BusinessViewModel.class);
         if (isNetworkConnected()) {
             viewModel.fetch();
             hideNetworkAlert();
@@ -49,19 +51,33 @@ public class LocalSportsFragment extends Fragment {
     }
 
     private void hideProgressbar() {
-        binding.sportsProgressBar.setVisibility(View.INVISIBLE);
-        binding.sportsLoading.setVisibility(View.INVISIBLE);
+        binding.businessProgressBar.setVisibility(View.INVISIBLE);
+        binding.businessLoading.setVisibility(View.INVISIBLE);
+    }
+
+    private void setUpRecyclerView(ArrayList<Article> businessNews) {
+        ArticleAdapter adapter = new ArticleAdapter(businessNews);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        binding.businessRecyclerView.setAdapter(adapter);
+        binding.businessRecyclerView.setLayoutManager(layoutManager);
+    }
+
+    private void hideNetworkAlert() {
+        viewModel.getBusinessNews().observe(getActivity(), articles -> {
+            hideProgressbar();
+            setUpRecyclerView(articles);
+            hide();
+        });
+    }
+
+    private void showNetworkAlert() {
+        binding.imageNetwork.setVisibility(View.VISIBLE);
+        binding.networkText.setVisibility(View.VISIBLE);
+        binding.tryAgain.setVisibility(View.VISIBLE);
     }
 
     private void showProgressbar() {
-        binding.sportsProgressBar.setVisibility(View.VISIBLE);
-    }
-
-    private void setUpRecyclerView(ArrayList<Article> sportNews) {
-        ArticleAdapter adapter = new ArticleAdapter(sportNews);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        binding.sportsRecyclerView.setAdapter(adapter);
-        binding.sportsRecyclerView.setLayoutManager(layoutManager);
+        binding.businessProgressBar.setVisibility(View.VISIBLE);
     }
 
     private void tryAgain() {
@@ -74,21 +90,6 @@ public class LocalSportsFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
             }
-        });
-
-    }
-
-    private void showNetworkAlert() {
-        binding.imageNetwork.setVisibility(View.VISIBLE);
-        binding.networkText.setVisibility(View.VISIBLE);
-        binding.tryAgain.setVisibility(View.VISIBLE);
-    }
-
-    private void hideNetworkAlert() {
-        viewModel.getLocalSportNews().observe(getActivity(), articles -> {
-            hideProgressbar();
-            setUpRecyclerView(articles);
-            hide();
         });
     }
 

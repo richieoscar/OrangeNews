@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +31,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        Toolbar toolbar = binding.toolbar;
+        setSupportActionBar(toolbar);
         drawerLayout = binding.drawer;
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         navigationView = binding.navView;
         getSupportActionBar().setElevation(0);
         setUpDrawerNavigationView();
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
         NavigationUI.setupWithNavController(navigationView, navController);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -88,17 +92,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.nav_search:
+                openSearch();
+                item.setChecked(true);
+                break;
             case R.id.likes:
                 Navigation.findNavController(this, R.id.frag_container).navigate(R.id.likesFragment);
+                item.setChecked(true);
                 break;
             case R.id.saved:
                 Navigation.findNavController(this, R.id.frag_container).navigate(R.id.savedFragment);
+                item.setChecked(true);
                 break;
             case R.id.sources:
                 Navigation.findNavController(this, R.id.frag_container).navigate(R.id.sourcesFragment);
+                item.setChecked(true);
+                break;
+            case R.id.nav_settings:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.settingsFragment);
+                item.setChecked(true);
+                break;
+            case R.id.about:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.aboutFragment);
+                item.setChecked(true);
                 break;
         }
-        item.setChecked(true);
+        // item.setChecked(true);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }

@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

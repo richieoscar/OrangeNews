@@ -6,13 +6,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.richieoscar.orangenews.ui.GermanyFragment;
-import com.richieoscar.orangenews.ui.HeadlinesFragment;
-import com.richieoscar.orangenews.ui.LatestFragment;
-import com.richieoscar.orangenews.ui.LocalSportsFragment;
-import com.richieoscar.orangenews.ui.SpainSportsFragment;
-import com.richieoscar.orangenews.ui.SportUKFragment;
-import com.richieoscar.orangenews.ui.SportUsFragment;
+import com.richieoscar.orangenews.ui.fragments.GermanyFragment;
+import com.richieoscar.orangenews.ui.fragments.LocalSportsFragment;
+import com.richieoscar.orangenews.ui.fragments.SpainSportsFragment;
+import com.richieoscar.orangenews.ui.fragments.SportUKFragment;
+import com.richieoscar.orangenews.ui.fragments.SportUsFragment;
 
 public class SportsPagerAdapter extends FragmentPagerAdapter {
     public SportsPagerAdapter(@NonNull FragmentManager fm) {

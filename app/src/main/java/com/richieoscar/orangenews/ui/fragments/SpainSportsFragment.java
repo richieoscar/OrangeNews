@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.fragments;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -16,27 +16,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.ArticleAdapter;
-import com.richieoscar.orangenews.databinding.FragmentEntertainmentBinding;
+import com.richieoscar.orangenews.databinding.FragmentSpainSportsBinding;
 import com.richieoscar.orangenews.model.Article;
-import com.richieoscar.orangenews.viewmodel.EntertainmentViewModel;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
+import com.richieoscar.orangenews.viewmodel.SpainSportsViewModel;
 
 import java.util.ArrayList;
 
-public class EntertainmentFragment extends Fragment {
-    FragmentEntertainmentBinding binding;
-    private EntertainmentViewModel viewModel;
+public class SpainSportsFragment extends Fragment {
+    private FragmentSpainSportsBinding binding;
+    private SpainSportsViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entertainment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_spain_sports, container, false);
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.buzz_feed);
+            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sports_feed);
         }
-        viewModel = new ViewModelProvider(getActivity()).get(EntertainmentViewModel.class);
-
+        viewModel = new ViewModelProvider(getActivity()).get(SpainSportsViewModel.class);
         if (isNetworkConnected()) {
             viewModel.fetch();
             hideNetworkAlert();
@@ -49,19 +48,20 @@ public class EntertainmentFragment extends Fragment {
     }
 
     private void hideProgressbar() {
-        binding.entProgressBar.setVisibility(View.INVISIBLE);
-        binding.progressLoadingEnt.setVisibility(View.INVISIBLE);
+        binding.sportsProgressBar.setVisibility(View.INVISIBLE);
+        binding.sportsLoading.setVisibility(View.INVISIBLE);
     }
 
-    private void setUpRecyclerView(ArrayList<Article> entertainmentArticles) {
-        ArticleAdapter adapter = new ArticleAdapter(entertainmentArticles);
+    private void setUpRecyclerView(ArrayList<Article> sportNews) {
+        ArticleAdapter adapter = new ArticleAdapter(sportNews);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        binding.entertainmentRv.setAdapter(adapter);
-        binding.entertainmentRv.setLayoutManager(layoutManager);
+        binding.sportsRecyclerView.setAdapter(adapter);
+        binding.sportsRecyclerView.setLayoutManager(layoutManager);
     }
+
 
     private void hideNetworkAlert() {
-        viewModel.getEntertainmentArticles().observe(getActivity(), articles -> {
+        viewModel.getSportNews().observe(getActivity(), articles -> {
             hideProgressbar();
             setUpRecyclerView(articles);
             hide();
@@ -75,7 +75,7 @@ public class EntertainmentFragment extends Fragment {
     }
 
     private void showProgressbar() {
-        binding.entProgressBar.setVisibility(View.VISIBLE);
+        binding.sportsProgressBar.setVisibility(View.VISIBLE);
     }
 
     private void tryAgain() {
@@ -101,5 +101,4 @@ public class EntertainmentFragment extends Fragment {
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
-
 }

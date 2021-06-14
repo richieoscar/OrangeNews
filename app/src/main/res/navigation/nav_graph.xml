@@ -7,46 +7,46 @@
 
     <fragment
         android:id="@+id/business"
-        android:name="com.richieoscar.orangenews.ui.BusinessFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.BusinessFragment"
         android:label="BusinessFragment" />
     <fragment
         android:id="@+id/entertainment"
-        android:name="com.richieoscar.orangenews.ui.EntertainmentFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.EntertainmentFragment"
         android:label="EntertainmentFragment" />
     <fragment
         android:id="@+id/tech"
-        android:name="com.richieoscar.orangenews.ui.TechFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.TechFragment"
         android:label="MusicFragment" />
     <fragment
         android:id="@+id/sports"
-        android:name="com.richieoscar.orangenews.ui.SportsFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.SportsFragment"
         android:label="SportsFragment" />
     <fragment
         android:id="@+id/home"
-        android:name="com.richieoscar.orangenews.ui.HomeFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.HomeFragment"
         android:label="HomeFragment" />
     <fragment
         android:id="@+id/headlinesFragment"
-        android:name="com.richieoscar.orangenews.ui.HeadlinesFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.HeadlinesFragment"
         android:label="HeadlinesFragment" />
     <fragment
         android:id="@+id/latestFragment"
-        android:name="com.richieoscar.orangenews.ui.LatestFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.LatestFragment"
         android:label="LatestFragment" />
 
     <fragment
         android:id="@+id/likesFragment"
-        android:name="com.richieoscar.orangenews.ui.LikesFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.LikesFragment"
         android:label="fragment_likes"
         tools:layout="@layout/fragment_likes" />
     <fragment
         android:id="@+id/savedFragment"
-        android:name="com.richieoscar.orangenews.ui.SavedFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.SavedFragment"
         android:label="fragment_saved"
         tools:layout="@layout/fragment_saved" />
     <fragment
         android:id="@+id/sourcesFragment"
-        android:name="com.richieoscar.orangenews.ui.SourcesFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.SourcesFragment"
         android:label="fragment_sources"
         tools:layout="@layout/fragment_sources" >
         <action
@@ -55,9 +55,20 @@
     </fragment>
     <fragment
         android:id="@+id/sourceDetailFragment"
-        android:name="com.richieoscar.orangenews.ui.SourceDetailFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.SourceDetailFragment"
         android:label="fragment_source_detail"
         tools:layout="@layout/fragment_source_detail" />
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.richieoscar.orangenews.ui.fragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 
 
 </navigation>

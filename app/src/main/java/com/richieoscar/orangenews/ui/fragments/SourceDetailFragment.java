@@ -1,16 +1,6 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -18,14 +8,14 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.richieoscar.orangenews.R;
-import com.richieoscar.orangenews.adapter.ArticleAdapter;
-import com.richieoscar.orangenews.adapter.SourcesDetailAdapter;
-import com.richieoscar.orangenews.databinding.FragmentSourceDetailBinding;
-import com.richieoscar.orangenews.model.Article;
-import com.richieoscar.orangenews.viewmodel.SourcesDetailViewModel;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
-import java.util.ArrayList;
+import com.richieoscar.orangenews.R;
+import com.richieoscar.orangenews.databinding.FragmentSourceDetailBinding;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
 
 public class SourceDetailFragment extends Fragment {
     FragmentSourceDetailBinding binding;

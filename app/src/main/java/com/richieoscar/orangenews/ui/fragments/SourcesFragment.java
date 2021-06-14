@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.fragments;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -22,6 +22,7 @@ import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.SourcesAdapter;
 import com.richieoscar.orangenews.databinding.FragmentSourcesBinding;
 import com.richieoscar.orangenews.model.Source;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
 import com.richieoscar.orangenews.viewmodel.SourcesViewModel;
 
 import java.util.ArrayList;

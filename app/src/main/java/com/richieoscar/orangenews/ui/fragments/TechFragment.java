@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.fragments;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -16,25 +16,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.ArticleAdapter;
-import com.richieoscar.orangenews.databinding.FragmentGermanyBinding;
+import com.richieoscar.orangenews.databinding.FragmentTechBinding;
 import com.richieoscar.orangenews.model.Article;
-import com.richieoscar.orangenews.viewmodel.GermanySportsViewModel;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
+import com.richieoscar.orangenews.viewmodel.TechViewModel;
 
 import java.util.ArrayList;
 
-public class GermanyFragment extends Fragment {
-    private FragmentGermanyBinding binding;
-    private GermanySportsViewModel viewModel;
+
+public class TechFragment extends Fragment {
+    private FragmentTechBinding binding;
+    private TechViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_germany, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tech, container, false);
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sports_feed);
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.tech_feeds);
         }
-        viewModel = new ViewModelProvider(getActivity()).get(GermanySportsViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(TechViewModel.class);
+
         if (isNetworkConnected()) {
             viewModel.fetch();
             hideNetworkAlert();
@@ -47,19 +51,19 @@ public class GermanyFragment extends Fragment {
     }
 
     private void hideProgressbar() {
-        binding.sportsProgressBar.setVisibility(View.INVISIBLE);
-        binding.sportsLoading.setVisibility(View.INVISIBLE);
+        binding.techProgressBar.setVisibility(View.INVISIBLE);
+        binding.techLoading.setVisibility(View.INVISIBLE);
     }
 
-    private void setUpRecyclerView(ArrayList<Article> sportNews) {
-        ArticleAdapter adapter = new ArticleAdapter(sportNews);
+    private void setUpRecyclerView(ArrayList<Article> techNews) {
+        ArticleAdapter adapter = new ArticleAdapter(techNews);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        binding.sportsRecyclerView.setAdapter(adapter);
-        binding.sportsRecyclerView.setLayoutManager(layoutManager);
+        binding.techRecyclerView.setAdapter(adapter);
+        binding.techRecyclerView.setLayoutManager(layoutManager);
     }
 
     private void hideNetworkAlert() {
-        viewModel.getGermanySportNews().observe(getActivity(), articles -> {
+        viewModel.getTechNews().observe(getActivity(), articles -> {
             hideProgressbar();
             setUpRecyclerView(articles);
             hide();
@@ -73,7 +77,7 @@ public class GermanyFragment extends Fragment {
     }
 
     private void showProgressbar() {
-        binding.sportsProgressBar.setVisibility(View.VISIBLE);
+        binding.techProgressBar.setVisibility(View.VISIBLE);
     }
 
     private void tryAgain() {
@@ -100,4 +104,5 @@ public class GermanyFragment extends Fragment {
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
+
 }

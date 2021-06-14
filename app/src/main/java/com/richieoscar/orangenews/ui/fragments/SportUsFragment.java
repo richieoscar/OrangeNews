@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.fragments;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -18,6 +18,7 @@ import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.ArticleAdapter;
 import com.richieoscar.orangenews.databinding.FragmentSportUsBinding;
 import com.richieoscar.orangenews.model.Article;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
 import com.richieoscar.orangenews.viewmodel.SportsUsViewModel;
 
 import java.util.ArrayList;

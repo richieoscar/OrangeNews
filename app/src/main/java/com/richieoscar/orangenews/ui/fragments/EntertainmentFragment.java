@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.fragments;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -16,23 +16,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.ArticleAdapter;
-import com.richieoscar.orangenews.databinding.FragmentLatestBinding;
+import com.richieoscar.orangenews.databinding.FragmentEntertainmentBinding;
 import com.richieoscar.orangenews.model.Article;
-import com.richieoscar.orangenews.viewmodel.LatestViewModel;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
+import com.richieoscar.orangenews.viewmodel.EntertainmentViewModel;
 
 import java.util.ArrayList;
 
-public class LatestFragment extends Fragment {
-    private FragmentLatestBinding binding;
-    private static final String TAG = "LatestFragment";
-    private LatestViewModel viewModel;
+public class EntertainmentFragment extends Fragment {
+    FragmentEntertainmentBinding binding;
+    private EntertainmentViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_latest, container, false);
-        viewModel = new ViewModelProvider(getActivity()).get(LatestViewModel.class);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entertainment, container, false);
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.buzz_feed);
+        }
+        viewModel = new ViewModelProvider(getActivity()).get(EntertainmentViewModel.class);
+
         if (isNetworkConnected()) {
             viewModel.fetch();
             hideNetworkAlert();
@@ -44,8 +49,20 @@ public class LatestFragment extends Fragment {
         return binding.getRoot();
     }
 
+    private void hideProgressbar() {
+        binding.entProgressBar.setVisibility(View.INVISIBLE);
+        binding.progressLoadingEnt.setVisibility(View.INVISIBLE);
+    }
+
+    private void setUpRecyclerView(ArrayList<Article> entertainmentArticles) {
+        ArticleAdapter adapter = new ArticleAdapter(entertainmentArticles);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        binding.entertainmentRv.setAdapter(adapter);
+        binding.entertainmentRv.setLayoutManager(layoutManager);
+    }
+
     private void hideNetworkAlert() {
-        viewModel.getLatestNews().observe(getActivity(), articles -> {
+        viewModel.getEntertainmentArticles().observe(getActivity(), articles -> {
             hideProgressbar();
             setUpRecyclerView(articles);
             hide();
@@ -59,7 +76,7 @@ public class LatestFragment extends Fragment {
     }
 
     private void showProgressbar() {
-        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.entProgressBar.setVisibility(View.VISIBLE);
     }
 
     private void tryAgain() {
@@ -81,21 +98,9 @@ public class LatestFragment extends Fragment {
         binding.tryAgain.setVisibility(View.INVISIBLE);
     }
 
-
-    private void hideProgressbar() {
-        binding.progressBar.setVisibility(View.INVISIBLE);
-        binding.progressLoading.setVisibility(View.INVISIBLE);
-    }
-
-    private void setUpRecyclerView(ArrayList<Article> articles) {
-        ArticleAdapter adapter = new ArticleAdapter(articles);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        binding.latestRecyclerView.setAdapter(adapter);
-        binding.latestRecyclerView.setLayoutManager(layoutManager);
-    }
-
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
+
 }

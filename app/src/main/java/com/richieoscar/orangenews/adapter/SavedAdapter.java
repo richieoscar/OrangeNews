@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.richieoscar.orangenews.R;
-import com.richieoscar.orangenews.model.Article;
 import com.richieoscar.orangenews.model.SavedArticle;
-import com.richieoscar.orangenews.repository.LikesRepository;
-import com.richieoscar.orangenews.ui.DetailActivity;
+import com.richieoscar.orangenews.repository.SavedArticleRepository;
+import com.richieoscar.orangenews.ui.activities.DetailActivity;
 
 import java.util.ArrayList;
 
@@ -40,7 +39,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ArticleViewH
     @Override
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
         holder.bind(articles.get(position));
-        // holder.like.setOnClickListener(v -> holder.liked(articles.get(position)));
+        holder.like.setOnClickListener(v -> holder.remove(articles.get(position)));
     }
 
     @Override
@@ -63,7 +62,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ArticleViewH
         private TextView publishedAt;
         private TextView source;
         private TextView time;
-        private LikesRepository repository = new LikesRepository();
+        private SavedArticleRepository repository = new SavedArticleRepository();
 
         public ArticleViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,13 +77,12 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ArticleViewH
             repository.setContext(itemView.getContext());
         }
 
-
         private void bind(SavedArticle article) {
             Glide.with(itemView.getContext()).load(article.getUrlToImage()).into(imageView);
             title.setText(article.getTitle());
             source.setText(article.getSource().getName());
             time.setText(formatDate(article));
-            like.setEnabled(false);
+            like.setImageResource(R.drawable.ic_savebookmark);
         }
 
         @Override
@@ -93,9 +91,9 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ArticleViewH
             displayArticleInfo(position, v);
         }
 
-        private void liked(Article article) {
-            repository.addToLikes(article);
-            Toast.makeText(repository.getContext(), "Removed from likes", Toast.LENGTH_SHORT).show();
+        private void remove(SavedArticle article) {
+            repository.deleteSavedArticle(article);
+            Toast.makeText(repository.getContext(), "Removed", Toast.LENGTH_SHORT).show();
         }
 
         private String formatDate(SavedArticle article) {

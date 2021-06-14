@@ -1,4 +1,4 @@
-package com.richieoscar.orangenews.ui;
+package com.richieoscar.orangenews.ui.fragments;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -16,25 +16,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.ArticleAdapter;
-import com.richieoscar.orangenews.databinding.FragmentSpainSportsBinding;
+import com.richieoscar.orangenews.databinding.FragmentSportUKBinding;
 import com.richieoscar.orangenews.model.Article;
-import com.richieoscar.orangenews.viewmodel.SpainSportsViewModel;
+import com.richieoscar.orangenews.viewmodel.SportsUkViewModel;
 
 import java.util.ArrayList;
 
-public class SpainSportsFragment extends Fragment {
-    private FragmentSpainSportsBinding binding;
-    private SpainSportsViewModel viewModel;
+
+public class SportUKFragment extends Fragment {
+
+    FragmentSportUKBinding binding;
+    private SportsUkViewModel viewModel;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_spain_sports, container, false);
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sports_feed);
-        }
-        viewModel = new ViewModelProvider(getActivity()).get(SpainSportsViewModel.class);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sport_u_k, container, false);
+        viewModel = new ViewModelProvider(getActivity()).get(SportsUkViewModel.class);
         if (isNetworkConnected()) {
             viewModel.fetch();
             hideNetworkAlert();
@@ -57,7 +57,6 @@ public class SpainSportsFragment extends Fragment {
         binding.sportsRecyclerView.setAdapter(adapter);
         binding.sportsRecyclerView.setLayoutManager(layoutManager);
     }
-
 
     private void hideNetworkAlert() {
         viewModel.getSportNews().observe(getActivity(), articles -> {
@@ -96,8 +95,11 @@ public class SpainSportsFragment extends Fragment {
         binding.tryAgain.setVisibility(View.INVISIBLE);
     }
 
+
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
+
+
 }

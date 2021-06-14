@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="#EDEEF1"
         android:elevation="3dp"
-        tools:context=".ui.SearchActivity">
+        tools:context=".ui.activities.SearchActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchRecylerview"
