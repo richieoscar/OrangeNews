@@ -15,3 +15,10 @@
 ![Screenshot_20210627-233006](https://user-images.githubusercontent.com/71092412/123561358-d3e98300-d79f-11eb-9a3f-2dc2cecacd33.png)
 ![Screenshot_20210627-233222](https://user-images.githubusercontent.com/71092412/123561452-48bcbd00-d7a0-11eb-9dff-40fc9ca369d1.png)
 ![Screenshot_20210627-233232](https://user-images.githubusercontent.com/71092412/123561464-570ad900-d7a0-11eb-9d5b-9717199face1.png)
+
+## Language and Libraries Used
+   
+  [Android Jetpack Components]
+<https://developer.android.com/topic/libraries/architecture />
+
+   
