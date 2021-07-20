@@ -22,6 +22,14 @@ import retrofit2.Response;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DataRepository {
+    /*
+    TODO
+    CREATE A NEW BRANCH TO MAKE MODIFICATION
+    1.Move all Mutablelive data to viewmodel
+    2. Make fetch methods return call and do the enqueue in viewmodel
+    3. Use a backward compatible api for the date
+    4. Use Pagination from the api instead of page size
+     */
     private static final String API_KEY = "11aa189af1c04dc5a5c9ee37aa43ef9f";
     private static final String TAG = "DataRepository";
     private static final int PAGE_SIZE = 50;

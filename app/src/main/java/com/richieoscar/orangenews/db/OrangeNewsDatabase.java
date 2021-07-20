@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 
 @Database(entities = {Article.class, SavedArticle.class}, version = 3, exportSchema = false)
 public abstract class OrangeNewsDatabase extends RoomDatabase {
-    public static ExecutorService doInBackground = Executors.newFixedThreadPool(6);
+    public static ExecutorService doInBackground = Executors.newFixedThreadPool(1);
     private static OrangeNewsDatabase INSTANCE;
 
     public static OrangeNewsDatabase getOrangeNewsDatabaseInstance(Context context) {
