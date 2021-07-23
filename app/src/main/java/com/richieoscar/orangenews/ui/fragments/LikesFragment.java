@@ -43,6 +43,8 @@ public class LikesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getSupportActionBar().show();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_likes, container, false);
         layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         decoration = new DividerItemDecoration(getContext(), layoutManager.getOrientation());

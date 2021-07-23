@@ -24,6 +24,8 @@ public class SportsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getSupportActionBar().show();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sports, container, false);
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);

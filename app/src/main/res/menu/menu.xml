@@ -15,13 +15,37 @@
         android:visible="false" />
     <item
         android:id="@+id/clear_saved"
+        android:icon="@drawable/ic_clear"
         android:orderInCategory="2"
         android:title="Clear Saved"
-        android:visible="false" />
+        android:visible="false"
+        app:showAsAction="always" />
     <item
         android:id="@+id/clear_likes"
+        android:icon="@drawable/ic_clear"
         android:orderInCategory="1"
         android:title="Clear Likes"
-        android:visible="false" />
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_baseline_share_24"
+        android:title="@string/share"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/add_to_bookmark"
+        android:icon="@drawable/ic_baseline_bookmark_24"
+        android:title="@string/saved"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/web_share"
+        android:visible="false"
+        android:title="@string/share_link" />
+    <item
+        android:id="@+id/web_reload"
+        android:visible="false"
+        android:title="Reload" />
 
 </menu>

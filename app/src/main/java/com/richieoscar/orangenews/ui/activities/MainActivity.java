@@ -1,6 +1,5 @@
 package com.richieoscar.orangenews.ui.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
         drawerLayout = binding.drawer;
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         navigationView = binding.navView;
         getSupportActionBar().setElevation(0);
         setUpDrawerNavigationView();
@@ -70,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.settings:
             case R.id.clear_likes:
             case R.id.clear_saved:
+            case R.id.share:
+            case R.id.add_to_bookmark:
+            case R.id.web_reload:
+            case R.id.web_share:
                 return false;
             case android.R.id.home:
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void openSearch() {
-        startActivity(new Intent(this, SearchActivity.class));
+        Navigation.findNavController(this, R.id.frag_container).navigate(R.id.searchFragment);
     }
 
     @Override
@@ -123,7 +125,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void navigateToSourceDetail(Bundle args) {
-        Navigation.findNavController(this, R.id.frag_container).navigate(R.id.sourceDetailFragment, args);
+        Navigation.findNavController(this, R.id.frag_container).navigate(R.id.detailsFragment, args);
+    }
+
+    public void openDetail(Bundle args) {
+        Navigation.findNavController(this, R.id.frag_container).navigate(R.id.detailsFragment, args);
+    }
+
+    public void openWebView(Bundle args) {
+        Navigation.findNavController(this, R.id.frag_container).navigate(R.id.webFragment, args);
     }
 
     @Override

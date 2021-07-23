@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        tools:context=".ui.activities.SearchActivity">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchRecylerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="125dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_results"
+            tools:listitem="@layout/item_list" />
+
+        <EditText
+            android:id="@+id/searchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edittext_shape"
+            android:drawableStart="@drawable/ic_baseline_search_24"
+            android:ems="10"
+            android:hint="@string/search_here"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toStartOf="@+id/button_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_search"
+            android:layout_width="92dp"
+            android:layout_height="43dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/orange"
+            android:text="@string/search"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/searchView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/searchView" />
+
+        <TextView
+            android:id="@+id/search_results"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#D5000000"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="@+id/searchView"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <ImageView
+            android:id="@+id/imageNetwork"
+            android:layout_width="115dp"
+            android:layout_height="97dp"
+            android:layout_marginTop="192dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_network_check_24" />
+
+        <TextView
+            android:id="@+id/networkText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/no_network"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/imageNetwork"
+            app:layout_constraintStart_toStartOf="@+id/imageNetwork"
+            app:layout_constraintTop_toBottomOf="@+id/imageNetwork" />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="20dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="5dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/search_results"
+            app:layout_constraintTop_toTopOf="@+id/search_results" />
+
+        <TextView
+            android:id="@+id/try_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Try Again"
+            android:textColor="@color/primaryLightColor"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/networkText"
+            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintStart_toStartOf="@+id/networkText"
+            app:layout_constraintTop_toBottomOf="@+id/networkText" />
+
+        <TextView
+            android:id="@+id/popularity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            android:elevation="10dp"
+            android:padding="5dp"
+            android:text="popularity"
+            android:textColor="@color/orange"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+        <TextView
+            android:id="@+id/relevancy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            android:elevation="15dp"
+            android:padding="5dp"
+            android:text="relevancy"
+            android:textColor="@color/primaryLightColor"
+            app:layout_constraintStart_toEndOf="@+id/popularity"
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="5dp"
+            android:text="Search Filter:"
+            app:layout_constraintStart_toStartOf="@+id/searchView"
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

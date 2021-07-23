@@ -14,17 +14,19 @@
         android:theme="@style/Theme.OrangeNews"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.OrangeNews"></activity>
-        <activity
-            android:name=".ui.activities.SplashActivity"
-            android:theme="@style/NoActionBarTheme">
+            android:theme="@style/Theme.OrangeNews">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.SplashActivity"
+            android:theme="@style/NoActionBarTheme">
+
         </activity>
         <activity
             android:name=".ui.activities.WebActivity"
@@ -39,7 +41,7 @@
             android:label="Article"
             android:parentActivityName=".ui.activities.MainActivity"
             android:theme="@style/ActionBarTheme" />
-        <activity android:name=".ui.activities.MainActivity"></activity>
+
     </application>
 
 </manifest>

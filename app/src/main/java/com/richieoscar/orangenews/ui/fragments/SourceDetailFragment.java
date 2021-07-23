@@ -31,6 +31,8 @@ public class SourceDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getSupportActionBar().show();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_source_detail, container, false);
         webView = binding.webView;
         String name = getArguments().getString("Name");

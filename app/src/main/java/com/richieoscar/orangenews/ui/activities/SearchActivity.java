@@ -39,7 +39,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void search() {
-
         binding.buttonSearch.setOnClickListener(v -> {
             if (isNetworkConnected()) {
                 hide();

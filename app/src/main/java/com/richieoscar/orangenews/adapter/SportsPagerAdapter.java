@@ -6,13 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.richieoscar.orangenews.ui.fragments.GermanyFragment;
 import com.richieoscar.orangenews.ui.fragments.LocalSportsFragment;
-import com.richieoscar.orangenews.ui.fragments.SpainSportsFragment;
 import com.richieoscar.orangenews.ui.fragments.SportUKFragment;
 import com.richieoscar.orangenews.ui.fragments.SportUsFragment;
 
+import java.util.ArrayList;
+
 public class SportsPagerAdapter extends FragmentPagerAdapter {
+
     public SportsPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
     }
@@ -27,11 +28,6 @@ public class SportsPagerAdapter extends FragmentPagerAdapter {
                 return new SportUKFragment();
             case 2:
                 return new SportUsFragment();
-            case 3:
-                return new SpainSportsFragment();
-            case 4:
-                return new GermanyFragment();
-
             default:
                 return null;
         }
@@ -39,7 +35,7 @@ public class SportsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 3;
     }
 
     @Nullable
@@ -52,10 +48,6 @@ public class SportsPagerAdapter extends FragmentPagerAdapter {
                 return "UK";
             case 2:
                 return "USA";
-            case 3:
-                return "Spain";
-            case 4:
-                return  "Germ";
             default:
                 return super.getPageTitle(position);
         }

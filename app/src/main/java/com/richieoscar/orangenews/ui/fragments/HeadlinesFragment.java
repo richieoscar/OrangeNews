@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,15 +20,21 @@ import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.ArticleAdapter;
 import com.richieoscar.orangenews.databinding.FragmentHeadlinesBinding;
 import com.richieoscar.orangenews.model.Article;
+import com.richieoscar.orangenews.model.JsonResult;
 import com.richieoscar.orangenews.ui.activities.MainActivity;
 import com.richieoscar.orangenews.viewmodel.HeadlineViewModel;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class HeadlinesFragment extends Fragment {
-    FragmentHeadlinesBinding binding;
+    private FragmentHeadlinesBinding binding;
     private HeadlineViewModel viewModel;
+    private AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,15 +47,48 @@ public class HeadlinesFragment extends Fragment {
             ((MainActivity) getActivity()).showBottomNavigation();
         }
         if (isNetworkConnected()) {
-            viewModel.fetch();
-            hideNetworkAlert();
+           fetchHeadlines();
         } else {
             showNetworkAlert();
             hideProgressbar();
             tryAgain();
         }
-
         return binding.getRoot();
+    }
+
+    private void fetchHeadlines() {
+        showProgressbar();
+        Call<JsonResult> call = viewModel.fetch();
+        call.enqueue(new Callback<JsonResult>() {
+            @Override
+            public void onResponse(Call<JsonResult> call, Response<JsonResult> response) {
+                if (response.isSuccessful()) {
+                    viewModel.setHeadlineArticles(response.body().getArticles());
+                    hideNetworkAlert();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResult> call, Throwable throwable) {
+                poorNetworkAlert();
+                //Toast.makeText(getContext(), "Poor Network Connection", Toast.LENGTH_SHORT).show();
+                hideProgressbar();
+            }
+        });
+    }
+
+    private void poorNetworkAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.poor_network, null);
+        builder.setView(view);
+        alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+        Button ok = view.findViewById(R.id.button);
+        ok.setOnClickListener((v) -> {
+            alertDialog.dismiss();
+            showNetworkAlert();
+        });
     }
 
     private void hideNetworkAlert() {
@@ -95,8 +136,7 @@ public class HeadlinesFragment extends Fragment {
             if (isNetworkConnected()) {
                 hide();
                 showProgressbar();
-                viewModel.fetch();
-                hideNetworkAlert();
+                fetchHeadlines();
             } else {
                 Toast.makeText(getContext(), "Unable to Connect", Toast.LENGTH_SHORT).show();
             }

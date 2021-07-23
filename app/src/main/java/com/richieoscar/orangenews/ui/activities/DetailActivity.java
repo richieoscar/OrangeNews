@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.BundleCompat;
 import androidx.core.app.ShareCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
@@ -43,6 +44,11 @@ public class DetailActivity extends AppCompatActivity {
             readIntent.putExtra("NewsUrl", article.getUrl());
             startActivity(readIntent);
         });
+    }
+
+    private void urlLauncher(){
+        Bundle bundle = new Bundle();
+        bundle.putString("articleUrl", article.getUrl());
     }
 
     private void display(Article article) {
@@ -129,6 +135,5 @@ public class DetailActivity extends AppCompatActivity {
 
     private String formatDate(String date) {
         return date.substring(0,10);
-
     }
 }
