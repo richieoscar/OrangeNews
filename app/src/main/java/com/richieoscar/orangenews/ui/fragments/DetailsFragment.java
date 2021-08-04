@@ -48,6 +48,7 @@ public class DetailsFragment extends Fragment {
         saved = getArguments().getParcelable("SavedArticle");
 
         display(article);
+        displaySavedArticle(saved);
         launchUrl();
         return binding.getRoot();
     }
