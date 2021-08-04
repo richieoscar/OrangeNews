@@ -1,6 +1,7 @@
 package com.richieoscar.orangenews.adapter;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.model.Article;
 import com.richieoscar.orangenews.repository.LikesRepository;
-import com.richieoscar.orangenews.ui.activities.DetailActivity;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
 
 import java.util.ArrayList;
 
@@ -49,9 +50,10 @@ public class LikesAdapter extends RecyclerView.Adapter<LikesAdapter.ArticleViewH
 
     private void displayArticleInfo(int position, View v) {
         Article article = articles.get(position);
-        Intent intent = new Intent(v.getContext(), DetailActivity.class);
-        intent.putExtra("Article", article);
-        v.getContext().startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Article", article);
+        MainActivity activity = (MainActivity) v.getContext();
+        activity.openDetail(bundle);
     }
 
 

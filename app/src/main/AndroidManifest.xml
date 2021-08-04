@@ -27,19 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.activities.WebActivity"
-            android:theme="@style/ActionBarTheme" />
-        <activity
-            android:name=".ui.activities.SearchActivity"
-            android:label="@string/search"
-            android:parentActivityName=".ui.activities.MainActivity"
-            android:theme="@style/ActionBarTheme" />
-        <activity
-            android:name=".ui.activities.DetailActivity"
-            android:label="Article"
-            android:parentActivityName=".ui.activities.MainActivity"
-            android:theme="@style/ActionBarTheme" />
 
         <meta-data
             android:name="preloaded_fonts"

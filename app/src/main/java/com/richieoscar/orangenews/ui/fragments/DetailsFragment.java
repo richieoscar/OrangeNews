@@ -27,6 +27,7 @@ public class DetailsFragment extends Fragment {
     private FragmentDetailsBinding binding;
     private DetailViewModel viewModel;
     private Article article;
+    private SavedArticle saved;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class DetailsFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false);
         viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
         article = getArguments().getParcelable(getString(R.string.article));
+        saved = getArguments().getParcelable("SavedArticle");
 
         display(article);
         launchUrl();
@@ -109,6 +111,25 @@ public class DetailsFragment extends Fragment {
 
         }
     }
+
+    private void displaySavedArticle(SavedArticle article) {
+        if (article != null) {
+            viewModel.setAuthor(article.getAuthor());
+            viewModel.setContent(article.getContent());
+            viewModel.setTitle(article.getTitle());
+            viewModel.setSource(article.getSource().getName());
+            viewModel.setImageUrl(article.getUrlToImage());
+            viewModel.setPublished(article.getPublishedAt());
+            binding.titleDetail.setText(viewModel.getTitle());
+            binding.authorDetail.setText(viewModel.getAuthor());
+            binding.publishDetail.setText(formatDate(viewModel.getPublished()));
+            binding.contentDetail.setText(viewModel.getContent());
+            binding.source.setText(viewModel.getSource());
+            Glide.with(this).load(viewModel.getImageUrl()).into(binding.imageDetail);
+
+        }
+    }
+
 
     private void addToBookMark() {
         SavedArticle savedArticle = new SavedArticle();

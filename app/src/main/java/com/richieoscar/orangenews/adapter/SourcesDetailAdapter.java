@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.model.Article;
-import com.richieoscar.orangenews.ui.activities.DetailActivity;
 
 import java.util.ArrayList;
 

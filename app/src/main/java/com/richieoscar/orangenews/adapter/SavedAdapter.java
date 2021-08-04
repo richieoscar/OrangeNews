@@ -1,6 +1,7 @@
 package com.richieoscar.orangenews.adapter;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.richieoscar.orangenews.R;
+import com.richieoscar.orangenews.model.Article;
 import com.richieoscar.orangenews.model.SavedArticle;
 import com.richieoscar.orangenews.repository.SavedArticleRepository;
-import com.richieoscar.orangenews.ui.activities.DetailActivity;
+import com.richieoscar.orangenews.ui.activities.MainActivity;
 
 import java.util.ArrayList;
 
@@ -49,9 +51,10 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ArticleViewH
 
     private void displayArticleInfo(int position, View v) {
         SavedArticle article = articles.get(position);
-        Intent intent = new Intent(v.getContext(), DetailActivity.class);
-        intent.putExtra("SavedArticle", article);
-        v.getContext().startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("SavedArticle", article);
+        MainActivity activity = (MainActivity) v.getContext();
+        activity.openDetail(bundle);
     }
 
 
