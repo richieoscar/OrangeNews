@@ -5,4 +5,31 @@
         <item name="android:background">@color/primaryColor</item>
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark</item>
     </style>
+
+    <style name="textStyleTheme">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="textButtons">
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="splashStyle">
+        <item name="android:background">@color/primaryColor</item>
+    </style>
+
+    <style name="textDetailStyle">
+        <item name="android:textColor">#CB000000</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="textVersionStyle" parent="textStyleTheme">
+        <item name="android:textColor">@color/primaryLightColor</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

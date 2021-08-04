@@ -28,7 +28,6 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         MainActivity activity = (MainActivity) getActivity();
         activity.getSupportActionBar().show();
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         adapter = new PagerAdapter(getChildFragmentManager());
         viewPager = binding.homeViewpager;

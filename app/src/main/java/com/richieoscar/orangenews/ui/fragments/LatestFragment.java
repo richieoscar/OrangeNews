@@ -1,7 +1,6 @@
 package com.richieoscar.orangenews.ui.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import com.richieoscar.orangenews.adapter.ArticleAdapter;
 import com.richieoscar.orangenews.databinding.FragmentLatestBinding;
 import com.richieoscar.orangenews.model.Article;
 import com.richieoscar.orangenews.model.JsonResult;
-import com.richieoscar.orangenews.ui.activities.MainActivity;
 import com.richieoscar.orangenews.viewmodel.LatestViewModel;
 
 import java.util.ArrayList;
@@ -86,6 +84,7 @@ public class LatestFragment extends Fragment {
         ok.setOnClickListener((v) -> {
             alertDialog.dismiss();
             showNetworkAlert();
+            tryAgain();
         });
     }
 
@@ -115,7 +114,7 @@ public class LatestFragment extends Fragment {
                 fetchLatest();
 
             } else {
-                Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.unable, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -78,6 +78,13 @@ public class EntertainmentFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showBottomNavigation();
+        super.onResume();
+    }
+
     private void hideProgressbar() {
         binding.entProgressBar.setVisibility(View.INVISIBLE);
         binding.progressLoadingEnt.setVisibility(View.INVISIBLE);
@@ -101,6 +108,7 @@ public class EntertainmentFragment extends Fragment {
         ok.setOnClickListener((v) -> {
             alertDialog.dismiss();
             showNetworkAlert();
+            tryAgain();
         });
     }
 
@@ -129,7 +137,7 @@ public class EntertainmentFragment extends Fragment {
                 showProgressbar();
                 fetchEntertainment();
             } else {
-                Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.unable, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -15,6 +15,16 @@ public class DetailViewModel extends AndroidViewModel {
     private String imageUrl;
     private String published;
     private String content;
+    private int imageResource;
+
+    public int getImageResource() {
+        return imageResource;
+    }
+
+    public void setImageResource(int imageResource) {
+        this.imageResource = imageResource;
+    }
+
     private SavedArticleRepository repository;
 
     public DetailViewModel(@NonNull Application application) {

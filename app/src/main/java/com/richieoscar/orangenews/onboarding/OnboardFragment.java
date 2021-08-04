@@ -23,11 +23,10 @@ public class OnboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         FragmentOnboardBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_onboard, container, false);
-        MainActivity activity = (MainActivity) getActivity();
-        activity.hideBottomNavigation();
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new FirstScreen());
         fragments.add(new SecondScreen());
+        fragments.add(new FourthScreen());
         fragments.add(new ThirdScreen());
 
         OnboardAdapter adapter = new OnboardAdapter(fragments, getActivity().getSupportFragmentManager(),getLifecycle());

@@ -1,6 +1,8 @@
 package com.richieoscar.orangenews.ui.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,15 +20,12 @@ import com.richieoscar.orangenews.ui.activities.SplashActivity;
 
 public class SplashFragment extends Fragment {
 
-    private static final long DELAY = 5000;
+    private static final long DELAY = 3000;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        MainActivity activity = (MainActivity) getActivity();
-        activity.getSupportActionBar().hide();
-        activity.hideBottomNavigation();
         loadSplashScreen();
         return inflater.inflate(R.layout.fragment_splash, container, false);
     }
@@ -35,8 +34,22 @@ public class SplashFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Navigation.findNavController(getActivity(),R.id.frag_container).navigate(R.id.action_splashFragment_to_onboardFragment);
+                if (isOnboardingFinished()) gotoHome();
+                else gotoOnboarding();
             }
         }, DELAY);
+    }
+    public void gotoHome(){
+        startActivity(new Intent(getContext(), MainActivity.class));
+        getActivity().finish();
+    }
+
+    private void gotoOnboarding(){
+        Navigation.findNavController(getActivity(),R.id.splash_container).navigate(R.id.action_splashFragment_to_onboardFragment);
+    }
+
+    private boolean isOnboardingFinished(){
+        SharedPreferences pref = getActivity().getSharedPreferences("onboarding", Context.MODE_PRIVATE);
+       return pref.getBoolean("finished", false);
     }
 }

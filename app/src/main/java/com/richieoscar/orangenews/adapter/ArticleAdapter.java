@@ -58,10 +58,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
 
     private void displayArticleInfo(int position, View v) {
         Article article = articles.get(position);
-//        Intent intent = new Intent(v.getContext(), DetailActivity.class);
-//        intent.putExtra("Article", article);
-//        v.getContext().startActivity(intent);
-
         Bundle bundle = new Bundle();
         bundle.putParcelable("Article", article);
         MainActivity activity = (MainActivity) v.getContext();
@@ -94,7 +90,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         }
 
         private void bind(Article article) {
+            if(article.getUrlToImage()!= null){
             Glide.with(itemView.getContext()).load(article.getUrlToImage()).into(imageView);
+            }
+            else{
+                article.setImageRes(R.drawable.logo);
+                Glide.with(itemView.getContext()).load(article.getImageRes()).into(imageView);
+            }
             title.setText(article.getTitle());
             description.setText(article.getDescription());
             source.setText(article.getSource().getName());

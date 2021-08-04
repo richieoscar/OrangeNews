@@ -15,6 +15,11 @@ import retrofit2.Call;
 public class SearchViewModel extends ViewModel {
     private String query;
     private String filter;
+    private String[] sorts = {"popularity","relevance"};
+
+    public String[] getSorts() {
+        return sorts;
+    }
 
     public String getFilter() {
         return filter;
@@ -24,7 +29,6 @@ public class SearchViewModel extends ViewModel {
         this.filter = filter;
     }
 
-    private LiveData<ArrayList<Article>> searchArticles;
     private MutableLiveData<ArrayList<Article>> _searchArticles = new MutableLiveData<>();
     private DataRepository repository = new DataRepository();
 

@@ -27,12 +27,11 @@ public class DetailsFragment extends Fragment {
     private FragmentDetailsBinding binding;
     private DetailViewModel viewModel;
     private Article article;
-    private SavedArticle savedArticle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -42,10 +41,9 @@ public class DetailsFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         activity.getSupportActionBar().show();
         activity.hideBottomNavigation();
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false);
         viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
         article = getArguments().getParcelable(getString(R.string.article));
-        //savedArticle = getIntent().getParcelableExtra(getString(R.string.saved_article));
 
         display(article);
         launchUrl();
@@ -58,13 +56,13 @@ public class DetailsFragment extends Fragment {
             case android.R.id.home:
                 MainActivity activity = (MainActivity) getActivity();
                 activity.onBackPressed();
-                return  true;
+                return true;
             case R.id.share:
                 shareArticle();
                 return true;
             case R.id.add_to_bookmark:
                 addToBookMark();
-                return  true;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -78,10 +76,10 @@ public class DetailsFragment extends Fragment {
         menu.findItem(R.id.share).setVisible(true);
     }
 
-    private void launchUrl(){
-        binding.buttonRead.setOnClickListener(v->{
+    private void launchUrl() {
+        binding.buttonRead.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("articleUrl", article.getUrl());
+            bundle.putString(getString(R.string.artcle_url), article.getUrl());
             MainActivity activity = (MainActivity) v.getContext();
             activity.openWebView(bundle);
         });
@@ -89,18 +87,26 @@ public class DetailsFragment extends Fragment {
 
     private void display(Article article) {
         if (article != null) {
+
             viewModel.setAuthor(article.getAuthor());
             viewModel.setContent(article.getContent());
             viewModel.setTitle(article.getTitle());
+            viewModel.setImageResource(article.getImageRes());
             viewModel.setSource(article.getSource().getName());
-            viewModel.setImageUrl(article.getUrlToImage());
+            if (article.getUrlToImage() == null) {
+                viewModel.setImageResource(R.drawable.logo);
+                Glide.with(getContext()).load(viewModel.getImageResource()).into(binding.imageDetail);
+            } else {
+                viewModel.setImageUrl(article.getUrlToImage());
+                Glide.with(getContext()).load(viewModel.getImageUrl()).into(binding.imageDetail);
+            }
             viewModel.setPublished(article.getPublishedAt());
             binding.titleDetail.setText(viewModel.getTitle());
             binding.authorDetail.setText(viewModel.getAuthor());
             binding.publishDetail.setText(formatDate(viewModel.getPublished()));
             binding.contentDetail.setText(viewModel.getContent());
             binding.source.setText(viewModel.getSource());
-            Glide.with(getContext()).load(viewModel.getImageUrl()).into(binding.imageDetail);
+
         }
     }
 
@@ -129,6 +135,6 @@ public class DetailsFragment extends Fragment {
     }
 
     private String formatDate(String date) {
-        return date.substring(0,10);
+        return date.substring(0, 10);
     }
 }

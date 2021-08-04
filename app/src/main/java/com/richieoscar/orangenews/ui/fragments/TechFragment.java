@@ -59,6 +59,12 @@ public class TechFragment extends Fragment {
         }
         return binding.getRoot();
     }
+    @Override
+    public void onResume() {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showBottomNavigation();
+        super.onResume();
+    }
 
     private void fetchTech() {
         showProgressbar();
@@ -91,6 +97,7 @@ public class TechFragment extends Fragment {
         ok.setOnClickListener((v) -> {
             alertDialog.dismiss();
             showNetworkAlert();
+            tryAgain();
         });
     }
 
@@ -131,7 +138,7 @@ public class TechFragment extends Fragment {
                 showProgressbar();
                 fetchTech();
             } else {
-                Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.unable, Toast.LENGTH_SHORT).show();
             }
         });
     }

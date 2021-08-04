@@ -17,4 +17,5 @@
     <color name="orange">#f68d1e</color>
     <color name="darkMode">#171616</color>
     <color name="red">#E64A19</color>
+    <color name="pressed">#ABC8EA</color>
 </resources>

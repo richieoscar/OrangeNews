@@ -57,6 +57,13 @@ public class BusinessFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showBottomNavigation();
+        super.onResume();
+    }
+
     private void fetchBusiness() {
         showProgressbar();
         Call<JsonResult> call = viewModel.fetch();
@@ -88,6 +95,7 @@ public class BusinessFragment extends Fragment {
         ok.setOnClickListener((v) -> {
             alertDialog.dismiss();
             showNetworkAlert();
+            tryAgain();
         });
     }
 

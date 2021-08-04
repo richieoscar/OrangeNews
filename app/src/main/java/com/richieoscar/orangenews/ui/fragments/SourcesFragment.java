@@ -5,13 +5,14 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,16 +23,22 @@ import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.SourcesAdapter;
 import com.richieoscar.orangenews.databinding.FragmentSourcesBinding;
 import com.richieoscar.orangenews.model.Source;
+import com.richieoscar.orangenews.model.SourceJsonResult;
 import com.richieoscar.orangenews.ui.activities.MainActivity;
 import com.richieoscar.orangenews.viewmodel.SourcesViewModel;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SourcesFragment extends Fragment {
     private FragmentSourcesBinding binding;
     private SourcesAdapter adapter;
     private RecyclerView recyclerView;
     private SourcesViewModel viewModel;
+    private AlertDialog alertDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,14 +60,34 @@ public class SourcesFragment extends Fragment {
         }
         viewModel = new ViewModelProvider(getActivity()).get(SourcesViewModel.class);
         if (isNetworkConnected()) {
-            viewModel.fetch();
+            fetchSources();
             hideNetworkAlert();
         } else {
             showNetworkAlert();
-            hideProgressbar();
+            hideProgressBar();
             tryAgain();
         }
         return binding.getRoot();
+    }
+
+    private void fetchSources() {
+        showProgressbar();
+        Call<SourceJsonResult> call = viewModel.fetch();
+        call.enqueue(new Callback<SourceJsonResult>() {
+            @Override
+            public void onResponse(Call<SourceJsonResult> call, Response<SourceJsonResult> response) {
+                if (response.isSuccessful()) {
+                    viewModel.setAllSources(response.body().getSources());
+                    hideNetworkAlert();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SourceJsonResult> call, Throwable throwable) {
+                poorNetworkAlert();
+                hideProgressBar();
+            }
+        });
     }
 
     private void setUpRecyclerView(ArrayList<Source> sources) {
@@ -69,7 +96,8 @@ public class SourcesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
-    private void hideProgressBar(){
+
+    private void hideProgressBar() {
         binding.progressBar.setVisibility(View.GONE);
         binding.progressLoading.setVisibility(View.GONE);
     }
@@ -77,23 +105,14 @@ public class SourcesFragment extends Fragment {
     @Override
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
         menu.findItem(R.id.search).setVisible(false);
-        menu.findItem(R.id.settings).setVisible(true);
+        menu.findItem(R.id.settings).setVisible(false);
         super.onPrepareOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                Toast.makeText(getContext(), R.string.settings, Toast.LENGTH_SHORT).show();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void hideNetworkAlert() {
         viewModel.getAllSources().observe(getActivity(), articles -> {
-            hideProgressbar();
+            hideProgressBar();
             setUpRecyclerView(articles);
             hide();
         });
@@ -109,9 +128,19 @@ public class SourcesFragment extends Fragment {
         binding.progressBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideProgressbar() {
-        binding.progressBar.setVisibility(View.INVISIBLE);
-        binding.progressLoading.setVisibility(View.INVISIBLE);
+    private void poorNetworkAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.poor_network, null);
+        builder.setView(view);
+        alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+        Button ok = view.findViewById(R.id.button);
+        ok.setOnClickListener((v) -> {
+            alertDialog.dismiss();
+            showNetworkAlert();
+            tryAgain();
+        });
     }
 
     private void tryAgain() {
@@ -119,10 +148,10 @@ public class SourcesFragment extends Fragment {
             if (isNetworkConnected()) {
                 hide();
                 showProgressbar();
-                viewModel.fetch();
+                fetchSources();
                 hideNetworkAlert();
             } else {
-                Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.unable, Toast.LENGTH_SHORT).show();
             }
         });
     }

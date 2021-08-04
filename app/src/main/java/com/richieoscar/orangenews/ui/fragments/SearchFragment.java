@@ -8,7 +8,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +49,7 @@ public class SearchFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -84,13 +88,17 @@ public class SearchFragment extends Fragment {
 
     private void selectPopularity() {
         binding.popularity.setOnClickListener(v -> {
-            viewModel.setFilter("popularity");
+            binding.popularity.setBackgroundColor(getResources().getColor(R.color.pressed));
+            binding.relevancy.setBackgroundColor(getResources().getColor(R.color.white));
+            viewModel.setFilter(getString(R.string.popularity));
         });
     }
 
     private void selectRelevance() {
-        binding.popularity.setOnClickListener(v -> {
-            viewModel.setFilter("relevancy");
+        binding.relevancy.setOnClickListener(v -> {
+            binding.relevancy.setBackgroundColor(getResources().getColor(R.color.pressed));
+            binding.popularity.setBackgroundColor(getResources().getColor(R.color.white));
+            viewModel.setFilter(getString(R.string.relevancy));
         });
     }
 
@@ -112,6 +120,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonResult> call, Throwable throwable) {
                 poorNetworkAlert();
+
             }
         });
 
@@ -124,13 +133,13 @@ public class SearchFragment extends Fragment {
                 hide();
                 doSearch();
             } else {
-                Toast.makeText(getContext(), "Unable to Connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.unable, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setUpRecyclerView(ArrayList<Article> articles) {
-        ArticleAdapter  adapter = new ArticleAdapter(articles);
+        ArticleAdapter adapter = new ArticleAdapter(articles);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         binding.searchRecylerview.setAdapter(adapter);
         binding.searchRecylerview.setLayoutManager(layoutManager);
@@ -148,6 +157,7 @@ public class SearchFragment extends Fragment {
         ok.setOnClickListener((v) -> {
             alertDialog.dismiss();
             showNetworkAlert();
+            tryAgain();
         });
     }
 
@@ -174,4 +184,6 @@ public class SearchFragment extends Fragment {
         ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
+
+
 }

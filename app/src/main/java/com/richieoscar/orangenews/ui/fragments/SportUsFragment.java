@@ -90,6 +90,7 @@ public class SportUsFragment extends Fragment {
         ok.setOnClickListener((v) -> {
             alertDialog.dismiss();
             showNetworkAlert();
+            tryAgain();
         });
     }
 
@@ -125,7 +126,7 @@ public class SportUsFragment extends Fragment {
                 showProgressbar();
                 fetchUsSports();
             } else {
-                Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.unable, Toast.LENGTH_SHORT).show();
             }
         });
     }

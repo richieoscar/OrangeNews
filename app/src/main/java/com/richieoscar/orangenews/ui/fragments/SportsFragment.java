@@ -38,4 +38,11 @@ public class SportsFragment extends Fragment {
         binding.homeTablayout.setupWithViewPager(viewPager);
         return binding.getRoot();
     }
+
+    @Override
+    public void onResume() {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showBottomNavigation();
+        super.onResume();
+    }
 }

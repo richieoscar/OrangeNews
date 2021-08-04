@@ -110,10 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Navigation.findNavController(this, R.id.frag_container).navigate(R.id.sourcesFragment);
                 item.setChecked(true);
                 break;
-            case R.id.nav_settings:
-                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.settingsFragment);
-                item.setChecked(true);
-                break;
+
             case R.id.about:
                 Navigation.findNavController(this, R.id.frag_container).navigate(R.id.aboutFragment);
                 item.setChecked(true);
@@ -125,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void navigateToSourceDetail(Bundle args) {
-        Navigation.findNavController(this, R.id.frag_container).navigate(R.id.detailsFragment, args);
+        Navigation.findNavController(this, R.id.frag_container).navigate(R.id.sourceDetailFragment, args);
     }
 
     public void openDetail(Bundle args) {

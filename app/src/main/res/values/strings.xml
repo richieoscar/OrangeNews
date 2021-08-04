@@ -42,7 +42,7 @@
     <string name="buzz_feed">Buzz</string>
     <string name="searching">Searching...</string>
     <string name="results">Search Result: </string>
-    <string name="found">articles found on </string>
+    <string name="found"> articles found on </string>
     <string name="sports_feed">Sports</string>
     <string name="tech_feeds">Technology</string>
     <string name="bo_bookmarks">No Available Bookmarks</string>
@@ -64,4 +64,9 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="unable">Unable to connect</string>
+    <string name="artcle_url">articleUrl</string>
+    <string name="popularity">popularity</string>
+    <string name="relevancy">relevancy</string>
+
 </resources>

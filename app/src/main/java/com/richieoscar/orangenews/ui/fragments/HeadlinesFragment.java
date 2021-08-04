@@ -71,8 +71,7 @@ public class HeadlinesFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonResult> call, Throwable throwable) {
                 poorNetworkAlert();
-                //Toast.makeText(getContext(), "Poor Network Connection", Toast.LENGTH_SHORT).show();
-                hideProgressbar();
+                 hideProgressbar();
             }
         });
     }
@@ -88,6 +87,7 @@ public class HeadlinesFragment extends Fragment {
         ok.setOnClickListener((v) -> {
             alertDialog.dismiss();
             showNetworkAlert();
+            tryAgain();
         });
     }
 
@@ -138,7 +138,7 @@ public class HeadlinesFragment extends Fragment {
                 showProgressbar();
                 fetchHeadlines();
             } else {
-                Toast.makeText(getContext(), "Unable to Connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.unable, Toast.LENGTH_SHORT).show();
             }
         });
     }
