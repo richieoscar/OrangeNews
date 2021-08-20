@@ -12,25 +12,24 @@
         android:layout_height="match_parent"
         tools:context=".ui.fragments.SportsFragment">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/sportViewpager"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/homeTablayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/darkMode"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tabIndicatorColor="@color/primaryColor"
-                app:tabIndicatorFullWidth="false"
-                app:tabIndicatorHeight="2dp"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="#8FFFFFFF" />
-        </androidx.viewpager.widget.ViewPager>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/homeTablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/darkMode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorColor="#FFFFFF"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="2dp"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="#8FFFFFFF" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,25 +12,23 @@
         android:layout_height="match_parent"
         tools:context=".ui.fragments.HomeFragment">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/homeViewpager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/homeTablayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#131212"
-                android:isScrollContainer="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tabIndicatorColor="@color/primaryLightColor"
-                app:tabIndicatorFullWidth="false"
-                app:tabIndicatorHeight="5dp"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="#A8FFFFFF" />
-        </androidx.viewpager.widget.ViewPager>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/homeTablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/darkMode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorColor="#FFFFFF"
+            app:tabIndicatorFullWidth="false"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="#8FFFFFFF" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

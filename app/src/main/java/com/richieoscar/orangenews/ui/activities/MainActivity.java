@@ -83,7 +83,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void openSearch() {
-        Navigation.findNavController(this, R.id.frag_container).navigate(R.id.searchFragment);
+        int currentFrag = navHostFragment.getNavController().getCurrentDestination().getId();
+        switch (currentFrag) {
+            case R.id.home:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_home_to_searchFragment);
+                break;
+            case R.id.sports:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_sports_to_searchFragment);
+                break;
+            case R.id.entertainment:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_entertainment_to_searchFragment);
+                break;
+            case R.id.business:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_business_to_searchFragment);
+                break;
+            case R.id.tech:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_tech_to_searchFragment);
+                break;
+        }
+
     }
 
     @Override
@@ -126,7 +144,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void openDetail(Bundle args) {
-        Navigation.findNavController(this, R.id.frag_container).navigate(R.id.detailsFragment, args);
+        int currentFrag = navHostFragment.getNavController().getCurrentDestination().getId();
+        switch (currentFrag) {
+            case R.id.home:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_home_to_detailsFragment, args);
+                break;
+            case R.id.sports:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_sports_to_detailsFragment, args);
+                break;
+            case R.id.entertainment:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_entertainment_to_detailsFragment, args);
+                break;
+            case R.id.business:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_business_to_detailsFragment, args);
+                break;
+            case R.id.tech:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_tech_to_detailsFragment, args);
+                break;
+            case R.id.likesFragment:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_likesFragment_to_detailsFragment, args);
+                break;
+            case R.id.savedFragment:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_savedFragment_to_detailsFragment, args);
+                break;
+            case R.id.searchFragment:
+                Navigation.findNavController(this, R.id.frag_container).navigate(R.id.action_searchFragment_to_detailsFragment, args);
+
+        }
     }
 
     public void openWebView(Bundle args) {

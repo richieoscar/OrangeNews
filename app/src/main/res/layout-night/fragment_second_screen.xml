@@ -10,7 +10,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:tag="layout/fragment_first_screen_0"
         tools:context=".onboarding.FirstScreen">
 
 
@@ -23,22 +22,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/news_updates"
-            tools:src="@drawable/news_updates" />
-
+            app:srcCompat="@drawable/news_bookmarks"
+            tools:src="@drawable/news_bookmarks" />
 
         <TextView
             android:id="@+id/textView5"
             style="@style/textStyleTheme"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:text="Get News updates on World Happenings"
+            android:text="Bookmark News Articles for Later"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <TextView
             android:id="@+id/next"
@@ -52,7 +52,8 @@
             android:padding="10dp"
             android:text="NEXT"
             android:textAlignment="center"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,25 +64,23 @@
             style="@style/textStyleTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="anytime on your mobile"
+            android:text="Read at your leisure time"
             app:layout_constraintEnd_toEndOf="@+id/textView5"
             app:layout_constraintStart_toStartOf="@+id/textView5"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/roboto_bold"
-            android:shadowColor="@color/orange"
-            android:text="News Updates"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="Bookmark"
             android:textColor="@color/primaryLightColor"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/imageView4"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="@+id/imageView4"
             app:layout_constraintTop_toBottomOf="@+id/imageView4" />
     </androidx.constraintlayout.widget.ConstraintLayout>

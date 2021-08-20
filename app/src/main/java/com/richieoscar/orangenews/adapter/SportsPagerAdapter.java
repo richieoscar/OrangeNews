@@ -1,26 +1,28 @@
 package com.richieoscar.orangenews.adapter;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.richieoscar.orangenews.ui.fragments.LocalSportsFragment;
 import com.richieoscar.orangenews.ui.fragments.SportUKFragment;
 import com.richieoscar.orangenews.ui.fragments.SportUsFragment;
+import com.richieoscar.orangenews.ui.fragments.SportsFragment;
 
-import java.util.ArrayList;
+public class SportsPagerAdapter extends FragmentStateAdapter {
 
-public class SportsPagerAdapter extends FragmentPagerAdapter {
 
-    public SportsPagerAdapter(@NonNull FragmentManager fm) {
-        super(fm);
+    public static final int SIZE = 3;
+
+    public SportsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
     }
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
+
         switch (position) {
             case 0:
                 return new LocalSportsFragment();
@@ -28,28 +30,14 @@ public class SportsPagerAdapter extends FragmentPagerAdapter {
                 return new SportUKFragment();
             case 2:
                 return new SportUsFragment();
+
             default:
-                return null;
+                return new SportsFragment();
         }
     }
 
     @Override
-    public int getCount() {
-        return 3;
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "Local";
-            case 1:
-                return "UK";
-            case 2:
-                return "USA";
-            default:
-                return super.getPageTitle(position);
-        }
+    public int getItemCount() {
+        return SIZE;
     }
 }

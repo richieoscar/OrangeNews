@@ -1,25 +1,11 @@
 package com.richieoscar.orangenews.repository;
 
-import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-
-import androidx.annotation.RequiresApi;
-import androidx.lifecycle.MutableLiveData;
-
 import com.richieoscar.orangenews.api.ApiClient;
 import com.richieoscar.orangenews.api.NewsApi;
-import com.richieoscar.orangenews.model.Article;
 import com.richieoscar.orangenews.model.JsonResult;
 import com.richieoscar.orangenews.utils.AppUtils;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DataRepository {
     /*
@@ -30,7 +16,7 @@ public class DataRepository {
     3. Use a backward compatible api for the date
     4. Use Pagination from the api instead of page size
      */
-    private static final String API_KEY = "11aa189af1c04dc5a5c9ee37aa43ef9f";
+    private static final String API_KEY = "7c1cc89351ca4ed8bd5abc6e7d26f63a";
     private static final String TAG = "DataRepository";
     private static final int PAGE_SIZE = 50;
     private String from = AppUtils.fromDate();

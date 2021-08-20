@@ -43,7 +43,6 @@ public class HeadlinesFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_headlines, container, false);
         viewModel = new ViewModelProvider(getActivity()).get(HeadlineViewModel.class);
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.feeds);
             ((MainActivity) getActivity()).showBottomNavigation();
         }
         if (isNetworkConnected()) {

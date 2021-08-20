@@ -146,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:padding="5dp"
-            android:text="Search Filter:"
+            android:text="SortBy:"
             app:layout_constraintStart_toStartOf="@+id/searchView"
             app:layout_constraintTop_toBottomOf="@+id/searchView" />
     </androidx.constraintlayout.widget.ConstraintLayout>

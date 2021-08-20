@@ -44,8 +44,6 @@ public class BusinessFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business, container, false);
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.business_feeds);
-
         }
         if (isNetworkConnected()) {
            fetchBusiness();

@@ -46,7 +46,6 @@ public class TechFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tech, container, false);
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.tech_feeds);
         }
 
 

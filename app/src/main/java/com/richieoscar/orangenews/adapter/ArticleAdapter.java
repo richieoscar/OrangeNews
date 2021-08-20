@@ -59,7 +59,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         Bundle bundle = new Bundle();
         bundle.putParcelable("Article", article);
         MainActivity activity = (MainActivity) v.getContext();
-        activity.openDetail(bundle);
+        if (bundle != null) {
+            activity.openDetail(bundle);
+        }
     }
 
 

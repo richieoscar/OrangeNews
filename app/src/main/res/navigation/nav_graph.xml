@@ -8,24 +8,84 @@
     <fragment
         android:id="@+id/business"
         android:name="com.richieoscar.orangenews.ui.fragments.BusinessFragment"
-        android:label="BusinessFragment" />
+        android:label="@string/business">
+        <action
+            android:id="@+id/action_business_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit" />
+        <action
+            android:id="@+id/action_business_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
     <fragment
         android:id="@+id/entertainment"
         android:name="com.richieoscar.orangenews.ui.fragments.EntertainmentFragment"
-        android:label="EntertainmentFragment" />
+        android:label="@string/buzz">
+        <action
+            android:id="@+id/action_entertainment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit" />
+        <action
+            android:id="@+id/action_entertainment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
     <fragment
         android:id="@+id/tech"
         android:name="com.richieoscar.orangenews.ui.fragments.TechFragment"
-        android:label="MusicFragment" />
+        android:label="@string/tech">
+        <action
+            android:id="@+id/action_tech_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit" />
+        <action
+            android:id="@+id/action_tech_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
     <fragment
         android:id="@+id/sports"
         android:name="com.richieoscar.orangenews.ui.fragments.SportsFragment"
-        android:label="SportsFragment" />
+        android:label="@string/sports">
+        <action
+            android:id="@+id/action_sports_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit" />
+        <action
+            android:id="@+id/action_sports_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
     <fragment
         android:id="@+id/home"
         android:name="com.richieoscar.orangenews.ui.fragments.HomeFragment"
         app:startDestination="@id/home"
-        android:label="HomeFragment" />
+        android:label="@string/feeds">
+        <action
+            android:id="@+id/action_home_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+        <action
+            android:id="@+id/action_home_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
     <fragment
         android:id="@+id/headlinesFragment"
         android:name="com.richieoscar.orangenews.ui.fragments.HeadlinesFragment"
@@ -39,12 +99,25 @@
         android:id="@+id/likesFragment"
         android:name="com.richieoscar.orangenews.ui.fragments.LikesFragment"
         android:label="fragment_likes"
-        tools:layout="@layout/fragment_likes" />
+        tools:layout="@layout/fragment_likes">
+        <action
+            android:id="@+id/action_likesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popExitAnim="@anim/fragment_open_exit" />
+    </fragment>
     <fragment
         android:id="@+id/savedFragment"
         android:name="com.richieoscar.orangenews.ui.fragments.SavedFragment"
         android:label="fragment_saved"
-        tools:layout="@layout/fragment_saved" />
+        tools:layout="@layout/fragment_saved">
+        <action
+            android:id="@+id/action_savedFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+    </fragment>
     <fragment
         android:id="@+id/sourcesFragment"
         android:name="com.richieoscar.orangenews.ui.fragments.SourcesFragment"
@@ -52,6 +125,7 @@
         tools:layout="@layout/fragment_sources" >
         <action
             android:id="@+id/action_sourcesFragment_to_home"
+            app:popExitAnim="@anim/fragment_open_exit"
             app:popUpTo="@id/home" />
     </fragment>
     <fragment
@@ -65,15 +139,18 @@
         android:name="com.richieoscar.orangenews.ui.fragments.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.richieoscar.orangenews.ui.fragments.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.richieoscar.orangenews.ui.fragments.SearchFragment"
-        android:label="Search" />
+        android:label="Search">
+        <action
+            android:id="@+id/action_searchFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popExitAnim="@anim/fragment_open_exit" />
+    </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.richieoscar.orangenews.ui.fragments.DetailsFragment"
@@ -81,7 +158,7 @@
     <fragment
         android:id="@+id/webFragment"
         android:name="com.richieoscar.orangenews.ui.fragments.WebFragment"
-        android:label="WebFragment" />
+        android:label="Full Article" />
 
 
 

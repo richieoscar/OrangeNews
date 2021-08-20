@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.adapter.SportsPagerAdapter;
 import com.richieoscar.orangenews.databinding.FragmentSportsBinding;
@@ -17,8 +19,9 @@ import com.richieoscar.orangenews.ui.activities.MainActivity;
 
 public class SportsFragment extends Fragment {
     private FragmentSportsBinding binding;
-    private ViewPager viewPager;
-    private SportsPagerAdapter adapter;
+    private ViewPager2 viewPager;
+    private FragmentStateAdapter adapter;
+    private String[] titles = {"Local Sport", "UK Sports", "US Sports"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,10 +35,11 @@ public class SportsFragment extends Fragment {
             ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.sports_feed);
         }
 
-        adapter = new SportsPagerAdapter(getChildFragmentManager());
-        viewPager = binding.sportViewpager;
+        adapter = new SportsPagerAdapter(getActivity());
+        viewPager = binding.viewpager2;
         viewPager.setAdapter(adapter);
-        binding.homeTablayout.setupWithViewPager(viewPager);
+        new TabLayoutMediator(binding.homeTablayout, viewPager,
+                (tab, position) -> tab.setText(titles[position])).attach();
         return binding.getRoot();
     }
 

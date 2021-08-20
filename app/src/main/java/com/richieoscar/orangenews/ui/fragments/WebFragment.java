@@ -1,13 +1,6 @@
 package com.richieoscar.orangenews.ui.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ShareCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,8 +9,13 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ShareCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
 import com.richieoscar.orangenews.R;
-import com.richieoscar.orangenews.databinding.FragmentSourceDetailBinding;
 import com.richieoscar.orangenews.databinding.FragmentWebBinding;
 import com.richieoscar.orangenews.ui.activities.MainActivity;
 
@@ -53,12 +51,16 @@ public class WebFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         url = getArguments().getString("articleUrl");
+        String savedUrl = getArguments().getString("savedurl");
         MainActivity activity = (MainActivity) getActivity();
-        activity.getSupportActionBar().setTitle(url);
         if (url != null) {
             webView.loadUrl(url);
+            activity.getSupportActionBar().setTitle("Full Article");
         }
-        webView.setWebViewClient(new WebViewClient(){
+        if (savedUrl != null) {
+            webView.loadUrl(savedUrl);
+        }
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 webView.setVisibility(View.VISIBLE);

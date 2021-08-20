@@ -49,9 +49,15 @@ public class DetailsFragment extends Fragment {
 
         display(article);
         displaySavedArticle(saved);
-        launchUrl();
+        if (article != null) {
+            launchUrl();
+        }
+        if (saved != null) {
+            launchSavedUrl();
+        }
         return binding.getRoot();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -83,6 +89,15 @@ public class DetailsFragment extends Fragment {
         binding.buttonRead.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString(getString(R.string.artcle_url), article.getUrl());
+            MainActivity activity = (MainActivity) v.getContext();
+            activity.openWebView(bundle);
+        });
+    }
+
+    private void launchSavedUrl() {
+        binding.buttonRead.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("savedurl", saved.getUrl());
             MainActivity activity = (MainActivity) v.getContext();
             activity.openWebView(bundle);
         });

@@ -3,6 +3,7 @@ package com.richieoscar.orangenews.ui.fragments;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,12 +62,14 @@ public class LatestFragment extends Fragment {
             public void onResponse(Call<JsonResult> call, Response<JsonResult> response) {
                 if (response.isSuccessful()) {
                     viewModel.setLatestNewsArticles(response.body().getArticles());
+                    Log.d(TAG, "onResponse: Getting data " + response.code());
                     hideNetworkAlert();
                 }
             }
 
             @Override
             public void onFailure(Call<JsonResult> call, Throwable throwable) {
+                Log.d(TAG, "onFailure: " + throwable.getMessage());
                 poorNetworkAlert();
                 hideProgressbar();
             }

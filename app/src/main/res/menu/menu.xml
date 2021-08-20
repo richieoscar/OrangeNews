@@ -41,11 +41,15 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/web_share"
+        android:icon="@drawable/ic_baseline_share"
+        android:title="@string/share_link"
         android:visible="false"
-        android:title="@string/share_link" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/web_reload"
+        android:icon="@drawable/ic_refresh"
+        android:title="Reload"
         android:visible="false"
-        android:title="Reload" />
+        app:showAsAction="always" />
 
 </menu>
