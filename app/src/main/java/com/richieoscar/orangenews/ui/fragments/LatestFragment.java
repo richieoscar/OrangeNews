@@ -63,7 +63,7 @@ public class LatestFragment extends Fragment {
                 if (response.isSuccessful()) {
                     viewModel.setLatestNewsArticles(response.body().getArticles());
                     Log.d(TAG, "onResponse: Getting data " + response.code());
-                    hideNetworkAlert();
+                    displayArticles();
                 }
             }
 
@@ -74,6 +74,12 @@ public class LatestFragment extends Fragment {
                 hideProgressbar();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        displayArticles();
+        super.onResume();
     }
 
     private void poorNetworkAlert() {
@@ -91,7 +97,7 @@ public class LatestFragment extends Fragment {
         });
     }
 
-    private void hideNetworkAlert() {
+    private void displayArticles() {
         viewModel.getLatestNews().observe(getActivity(), articles -> {
             hideProgressbar();
             setUpRecyclerView(articles);

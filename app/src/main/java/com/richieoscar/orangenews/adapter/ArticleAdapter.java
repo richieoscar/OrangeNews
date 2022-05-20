@@ -17,6 +17,7 @@ import com.richieoscar.orangenews.R;
 import com.richieoscar.orangenews.model.Article;
 import com.richieoscar.orangenews.repository.LikesRepository;
 import com.richieoscar.orangenews.ui.activities.MainActivity;
+import com.richieoscar.orangenews.utils.AppUtils;
 
 import java.util.ArrayList;
 
@@ -85,7 +86,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
             publishedAt = itemView.findViewById(R.id.publishDetail);
             time = itemView.findViewById(R.id.list_time);
             itemView.setOnClickListener(this);
-            like.setOnClickListener(this);
+            // like.setOnClickListener(this);
             repository.setContext(itemView.getContext());
         }
 
@@ -106,6 +107,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
+            AppUtils.setAdapterPosition(position);
             displayArticleInfo(position, v);
         }
 

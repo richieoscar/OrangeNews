@@ -35,6 +35,7 @@ public class EntertainmentFragment extends Fragment {
     private EntertainmentViewModel viewModel;
     private AlertDialog alertDialog;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class EntertainmentFragment extends Fragment {
             public void onResponse(Call<JsonResult> call, Response<JsonResult> response) {
                 if (response.isSuccessful()) {
                     viewModel.setEntertainmentArticles(response.body().getArticles());
-                    hideNetworkAlert();
+                    displayArticles();
                 }
             }
 
@@ -81,6 +82,7 @@ public class EntertainmentFragment extends Fragment {
     public void onResume() {
         MainActivity activity = (MainActivity) getActivity();
         activity.showBottomNavigation();
+        displayArticles();
         super.onResume();
     }
 
@@ -94,6 +96,7 @@ public class EntertainmentFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         binding.entertainmentRv.setAdapter(adapter);
         binding.entertainmentRv.setLayoutManager(layoutManager);
+
     }
 
     private void poorNetworkAlert() {
@@ -111,7 +114,15 @@ public class EntertainmentFragment extends Fragment {
         });
     }
 
-    private void hideNetworkAlert() {
+    private void displayArticles() {
+        viewModel.getEntertainmentArticles().observe(getActivity(), articles -> {
+            hideProgressbar();
+            setUpRecyclerView(articles);
+            hide();
+        });
+    }
+
+    private void displayArticles2(int itemPosition) {
         viewModel.getEntertainmentArticles().observe(getActivity(), articles -> {
             hideProgressbar();
             setUpRecyclerView(articles);

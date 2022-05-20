@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ShareCompat;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -128,7 +129,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Navigation.findNavController(this, R.id.frag_container).navigate(R.id.sourcesFragment);
                 item.setChecked(true);
                 break;
-
+            case R.id.share:
+                shareApp();
+                break;
             case R.id.about:
                 Navigation.findNavController(this, R.id.frag_container).navigate(R.id.aboutFragment);
                 item.setChecked(true);
@@ -191,5 +194,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void showBottomNavigation() {
         binding.bottomNav.setVisibility(View.VISIBLE);
+    }
+
+    private void shareApp() {
+        String appUrl = "https://play.google.com/store/apps/details?id=com.richieoscar.orangenews";
+        ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setChooserTitle(R.string.share_with)
+                .setText("OrangeNews App\nDownload From PlayStore Here \n" + appUrl)
+                .startChooser();
     }
 }

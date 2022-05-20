@@ -8,10 +8,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -58,6 +55,7 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         MainActivity activity = (MainActivity) getActivity();
         activity.getSupportActionBar().show();
+        activity.hideBottomNavigation();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
         viewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         binding.searchResults.requestFocus();
@@ -88,16 +86,16 @@ public class SearchFragment extends Fragment {
 
     private void selectPopularity() {
         binding.popularity.setOnClickListener(v -> {
-            binding.popularity.setBackgroundColor(getResources().getColor(R.color.pressed));
-            binding.relevancy.setBackgroundColor(getResources().getColor(R.color.white));
+            binding.popularity.setBackgroundDrawable(getResources().getDrawable(R.drawable._selected));
+            binding.relevancy.setBackgroundDrawable(getResources().getDrawable(R.drawable.text_shape));
             viewModel.setFilter(getString(R.string.popularity));
         });
     }
 
     private void selectRelevance() {
         binding.relevancy.setOnClickListener(v -> {
-            binding.relevancy.setBackgroundColor(getResources().getColor(R.color.pressed));
-            binding.popularity.setBackgroundColor(getResources().getColor(R.color.white));
+            binding.relevancy.setBackgroundDrawable(getResources().getDrawable(R.drawable._selected));
+            binding.popularity.setBackgroundDrawable(getResources().getDrawable(R.drawable.text_shape));
             viewModel.setFilter(getString(R.string.relevancy));
         });
     }

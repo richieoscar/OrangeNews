@@ -63,7 +63,7 @@ public class HeadlinesFragment extends Fragment {
             public void onResponse(Call<JsonResult> call, Response<JsonResult> response) {
                 if (response.isSuccessful()) {
                     viewModel.setHeadlineArticles(response.body().getArticles());
-                    hideNetworkAlert();
+                    displayArticles();
                 }
             }
 
@@ -90,7 +90,13 @@ public class HeadlinesFragment extends Fragment {
         });
     }
 
-    private void hideNetworkAlert() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        displayArticles();
+    }
+
+    private void displayArticles() {
         viewModel.getHeadlines().observe(getActivity(), articles -> {
             hideProgressbar();
             setUpRecyclerView(articles);

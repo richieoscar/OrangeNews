@@ -12,8 +12,7 @@
         <action
             android:id="@+id/action_business_to_detailsFragment"
             app:destination="@id/detailsFragment"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:popExitAnim="@anim/fragment_open_exit" />
+            app:enterAnim="@anim/fragment_open_enter" />
         <action
             android:id="@+id/action_business_to_searchFragment"
             app:destination="@id/searchFragment"
