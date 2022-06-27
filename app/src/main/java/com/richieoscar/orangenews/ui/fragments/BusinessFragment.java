@@ -3,12 +3,17 @@ package com.richieoscar.orangenews.ui.fragments;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -25,6 +30,7 @@ import com.richieoscar.orangenews.ui.activities.MainActivity;
 import com.richieoscar.orangenews.viewmodel.BusinessViewModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,31 +41,70 @@ public class BusinessFragment extends Fragment {
     private FragmentBusinessBinding binding;
     private BusinessViewModel viewModel;
     private AlertDialog alertDialog;
+    private static String TAG = "Business Fragment";
+    Parcelable state;
+    private LinearLayoutManager layoutManager;
+    private ArrayList<Article> results;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         viewModel = new ViewModelProvider(getActivity()).get(BusinessViewModel.class);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business, container, false);
+
+        layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            Objects.requireNonNull(((MainActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         }
+//        if (isNetworkConnected()) {
+//            fetchBusiness();
+//            Log.i(TAG, "onCreateView: Makin network call");
+//        } else {
+//            showNetworkAlert();
+//            hideProgressbar();
+//            tryAgain();
+//        }
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG, "onViewCreated: onviewcreated called");
+        layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         if (isNetworkConnected()) {
-           fetchBusiness();
+            fetchBusiness();
+            //Log.i(TAG, "onCreateView: Makin network call");
         } else {
             showNetworkAlert();
             hideProgressbar();
             tryAgain();
         }
-        return binding.getRoot();
     }
 
     @Override
     public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: onResume called");
         MainActivity activity = (MainActivity) getActivity();
         activity.showBottomNavigation();
-        super.onResume();
+        if (state != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //displayAirticles();
+                    binding.businessRecyclerView.getLayoutManager().onRestoreInstanceState(state);
+                }
+            }, 50);
+            binding.businessRecyclerView.setLayoutManager(layoutManager);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause: onPause called");
+        state = Objects.requireNonNull(binding.businessRecyclerView.getLayoutManager()).onSaveInstanceState();
     }
 
     private void fetchBusiness() {
@@ -70,7 +115,7 @@ public class BusinessFragment extends Fragment {
             public void onResponse(Call<JsonResult> call, Response<JsonResult> response) {
                 if (response.isSuccessful()) {
                     viewModel.setBusinessArticles(response.body().getArticles());
-                    hideNetworkAlert();
+                    displayAirticles();
                 }
             }
 
@@ -104,13 +149,14 @@ public class BusinessFragment extends Fragment {
 
     private void setUpRecyclerView(ArrayList<Article> businessNews) {
         ArticleAdapter adapter = new ArticleAdapter(businessNews);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        //layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         binding.businessRecyclerView.setAdapter(adapter);
         binding.businessRecyclerView.setLayoutManager(layoutManager);
     }
 
-    private void hideNetworkAlert() {
+    private void displayAirticles() {
         viewModel.getBusinessNews().observe(getActivity(), articles -> {
+            results = articles;
             hideProgressbar();
             setUpRecyclerView(articles);
             hide();
@@ -134,7 +180,7 @@ public class BusinessFragment extends Fragment {
                 showProgressbar();
                 fetchBusiness();
             } else {
-                Toast.makeText(getActivity(), "Unable to connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Unable to connect", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -62,6 +62,7 @@ public class TechFragment extends Fragment {
     public void onResume() {
         MainActivity activity = (MainActivity) getActivity();
         activity.showBottomNavigation();
+        displayArticles();
         super.onResume();
     }
 
@@ -73,7 +74,7 @@ public class TechFragment extends Fragment {
             public void onResponse(Call<JsonResult> call, Response<JsonResult> response) {
                 if (response.isSuccessful()) {
                     viewModel.setTechArticles(response.body().getArticles());
-                    hideNetworkAlert();
+                    displayArticles();
                 }
             }
 
@@ -112,7 +113,7 @@ public class TechFragment extends Fragment {
         binding.techRecyclerView.setLayoutManager(layoutManager);
     }
 
-    private void hideNetworkAlert() {
+    private void displayArticles() {
         viewModel.getTechNews().observe(getActivity(), articles -> {
             hideProgressbar();
             setUpRecyclerView(articles);
