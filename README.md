@@ -21,4 +21,8 @@
   [Android Jetpack Components]
 <https://developer.android.com/topic/libraries/architecture />
 
+## Download from Playstore 
+
+https://play.google.com/store/apps/details?id=com.richieoscar.orangenews
+
    
